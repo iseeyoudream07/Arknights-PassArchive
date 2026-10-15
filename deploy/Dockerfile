@@ -6,6 +6,8 @@ RUN pip install --no-cache-dir -r requirements.txt && useradd --uid 10001 --user
 COPY backend /app/backend
 COPY data/catalog.json /app/data/catalog.json
 COPY shared/upstream-fixtures.json /app/shared/upstream-fixtures.json
+COPY LICENSE THIRD_PARTY_NOTICES.md /app/
+COPY licenses /app/licenses
 USER 10001
 WORKDIR /app/backend
 EXPOSE 8000
