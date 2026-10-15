@@ -2,7 +2,7 @@
 
 《明日方舟》《明日方舟：终末地》实体通行认证的查询、收藏与购买记录工具。Web 使用 RhineLabUI 三维终端与二维目录，Django 提供共享 API 和 PostgreSQL 账号存档，iOS 提供原生 SwiftUI 起点。
 
-[在线使用](https://arknights.yukkuri.win/) · [下载 Release](https://github.com/iseeyoudream07/Arknights-PassArchive/releases/latest) · [部署文档](docs/deployment-guide.md) · [API](docs/api.md) · [第三方授权](THIRD_PARTY_NOTICES.md)
+[在线使用](https://arknights.yukkuri.win/) · [下载 Release](https://github.com/iseeyoudream07/Arknights-PassArchive/releases/latest) · [PyCharm 开发](docs/pycharm.md) · [部署文档](docs/deployment-guide.md) · [API](docs/api.md) · [第三方授权](THIRD_PARTY_NOTICES.md)
 
 ## 功能与进度
 
@@ -42,6 +42,17 @@ npm run dev
 ```
 
 打开 <http://127.0.0.1:5173/>。开发环境使用 SQLite，Web 将 `/api/` 转发到本机 Django；正式环境强制使用 PostgreSQL。随仓库提供统一目录和运行所需静态资源，无需重新获取原始上传文件。
+
+## 在 PyCharm 中编辑
+
+用 **File → Open** 打开项目根目录，选择 `.venv` 的 Python 解释器，依次运行 **01 初始化开发环境**、**02 运行整站**，再打开 <http://127.0.0.1:5173/>。还提供后端断点调试、前端独立热更新和本地检查配置，详见 [PyCharm 开发说明](docs/pycharm.md)。
+
+终端也可使用统一入口：
+
+```bash
+python3 tools/dev.py setup
+python3 tools/dev.py run
+```
 
 ## 构建与 Release
 
@@ -104,6 +115,7 @@ ios/          SwiftUI 工程与 SwiftData 本机存档
 data/         标准化目录和旧版映射
 shared/       上游统计验证样例
 tools/        数据构建、验证、工程生成和 Release 打包
+.run/         PyCharm 共享运行和调试配置
 deploy/       公开部署模板；密钥不随仓库提供
 docs/         API、账号、部署、数据来源和动效说明
 upstream/     主体目录参考快照及原版权说明

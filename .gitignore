@@ -11,6 +11,18 @@ xcuserdata/
 *.xcuserstate
 .DS_Store
 
+# Share portable PyCharm settings, keep personal IDE state local.
+.idea/*
+!.idea/.name
+!.idea/modules.xml
+!.idea/Arknights-PassArchive.iml
+.run/*
+!.run/01_Setup.run.xml
+!.run/02_Dev_All.run.xml
+!.run/03_API_Debug.run.xml
+!.run/04_Web.run.xml
+!.run/05_Checks.run.xml
+
 # Runtime and credentials
 .env
 .env.*

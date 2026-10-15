@@ -1,0 +1,2 @@
+# PyCharm detects this entry point; backend/requirements.txt remains the lockfile.
+-r backend/requirements.txt

@@ -9,6 +9,8 @@ upstream
 references
 artifacts
 .git
+.idea
+.run
 
 sources
 secrets
