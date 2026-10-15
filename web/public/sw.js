@@ -1,4 +1,4 @@
-const CACHE = 'pass-archive-v0.4.4';
+const CACHE = 'pass-archive-v0.4.5';
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);

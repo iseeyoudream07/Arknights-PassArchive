@@ -1,4 +1,8 @@
 services:
+  web:
+    extends:
+      file: compose.web.yml
+      service: web
   postgres:
     image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
     restart: unless-stopped
@@ -28,7 +32,7 @@ services:
     build:
       context: ..
       dockerfile: deploy/Dockerfile
-    image: passarchive-api:${PASSARCHIVE_VERSION:-0.4.4}
+    image: passarchive-api:${PASSARCHIVE_VERSION:-0.4.5}
     restart: unless-stopped
     ports: ["127.0.0.1:${PASSARCHIVE_API_PORT:-18082}:8000"]
     environment:

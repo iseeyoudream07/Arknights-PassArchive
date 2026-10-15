@@ -2,7 +2,6 @@ import {terminalCreditsMarkup} from "../../terminal-credits.ts";
 import {passContext, passToHost, passPreferences} from "../../terminal-context.ts";
 import {doctorIdentity} from "../../account-identity.ts";
 let passPaused = false;
-const documentExports = new Map<string,string>();
 import { createRollingClock } from "./rolling-clock.ts";
 import { InspectionOverlay } from "./inspection-overlay.ts";
 import { DocumentDecryption } from "./document-decryption.ts";
@@ -417,7 +416,8 @@ function fit() {
   if(viewport.clientWidth <= 0 || viewport.clientHeight <= 0)return;
   const coarse = matchMedia("(pointer: coarse)").matches;
   const reference =
-    reviewParams.has("time") || reviewParams.get("review") === "1";
+    (reviewParams.has("time") || reviewParams.get("review") === "1") &&
+    reviewParams.get("layout") !== "viewport";
   const { width, height, scale, kind } =
     mode === "boot" && !reference
       ? openingLayout(viewport.clientWidth, viewport.clientHeight)
@@ -711,7 +711,7 @@ function renderDetail() {
   <dl class="metadata"><div><dt>SERIES / 系列</dt><dd>${escapeHtml(r.department)}</dd></div><div><dt>COLLECTION / 编目范围</dt><dd>${escapeHtml(r.date)}</dd></div><div><dt>CONTENTS / 盒内通行认证</dt><dd>${escapeHtml(r.lead)}</dd></div><div><dt>STATUS / 状态</dt><dd><i></i>${r.clearance === "RESTRICTED" ? "目录访问" : "已归档 · 可读取"}</dd></div></dl>
   <div class="detail-tabs" role="tablist"><button id="tab-overview" class="active" role="tab" aria-controls="tab-panel" aria-selected="true" data-tab="overview">01 <span>概述</span></button><button id="tab-notes" role="tab" aria-controls="tab-panel" aria-selected="false" data-tab="notes">02 <span>系列资料</span></button><button id="tab-history" role="tab" aria-controls="tab-panel" aria-selected="false" data-tab="history">03 <span>访问日志</span></button><i class="tab-indicator" aria-hidden="true"></i></div>
   <div id="tab-panel" class="tab-panel" role="tabpanel">${overview()}</div></div>
-  <div class="detail-actions"><button class="pass-business-action" data-action="pass-series">通行证管理 ↗ <span>拥有状态 · 价格 · 购买记录</span></button><button class="solid-button" data-action="bookmark">${saved.has(r.seriesId) ? "− UNFOLLOW SERIES" : "＋ FOLLOW SERIES"}<span>${saved.has(r.seriesId) ? "已关注" : "关注系列"}</span></button><a class="export-button" href="${exportDocument(r)}" download="PASS-ARCHIVE-${r.id}.txt" aria-label="导出 ${r.id} 档案">EXPORT <span>↓</span></a></div>
+  <div class="detail-actions"><button class="pass-business-action" data-action="pass-series"><b>通行认证管理 ↗</b><span>拥有状态 · 价格 · 购买记录</span></button><button class="solid-button" data-action="bookmark">${saved.has(r.seriesId) ? "− UNFOLLOW SERIES" : "＋ FOLLOW SERIES"}<span>${saved.has(r.seriesId) ? "已关注" : "关注系列"}</span></button></div>
   <div class="detail-footnote"><button data-action="credits">来源与许可 ↗</button><span>${String(selected + 1).padStart(3, "0")} / ${String(records.length).padStart(3, "0")}</span></div>`;
   $("#detail-content").setAttribute("tabindex", "-1");
   $('[data-action="bookmark"]').setAttribute(
@@ -881,7 +881,7 @@ function motionPreferenceNoteMarkup() {
   return `<div id="motion-preference-note" class="motion-preference-note"><p>${motionSummary(prefs.motion)}</p><span>预设：${preset === "full" ? "完整动画" : preset === "reduced" ? "减少动画" : "自定义"} · 选择会保存在本站</span>${allEnabled ? "" : '<button data-action="enable-motion">启用完整动画并重播 ↻</button>'}</div>`;
 }
 function settingsMarkup() {
-  return `<h2>SYSTEM SETTINGS<small>终端偏好设置</small></h2><p class="settings-intro">PASS ARCHIVE · 本机收藏档案</p><div class="pass-host-links"><button data-action="pass-account">账号与同步 ↗</button><button data-action="saved">关注系列 ↗</button><button data-action="pass-catalog">通行证目录 ↗</button><button data-action="pass-collection">我的收藏 ↗</button><button data-action="pass-stats">收藏统计 ↗</button><button data-action="pass-settings">收藏备份与数据设置 ↗</button><button data-action="credits">来源与许可 ↗</button></div>${isWallpaper ? '<p class="wallpaper-settings-note">每次启动都会读取 Wallpaper Engine 中的设置。在此修改仅对当前运行生效，无法持久保存；如需保留，请在 Wallpaper Engine 的壁纸属性中调整。</p>' : ""}<div class="settings-list">${themeSettingsMarkup(prefs.colorTheme === "dark")}${!isWallpaper ? `<label><div><strong>SUPER PERFORMANCE</strong><span>降低三维画质和渲染分辨率，保留完整动效；关闭后恢复原画质</span></div><input type="checkbox" data-pref="superPerformance" ${prefs.superPerformance ? "checked" : ""}/><i class="toggle"></i></label>` : ""}${workbench?.settingsMarkup() ?? ""}${audioSettingsMarkup(prefs)}</div>${motionPreferenceNoteMarkup()}${motionSettingsMarkup(prefs.motion, prefs.motionPreset)}${qualityMarkup(prefs.rendering)}${pwaSettingsMarkup()}<div class="settings-shortcuts">${isWallpaper ? "<span>DESKTOP CONTROLS</span><p>拖动阵列或点击界面按钮浏览档案。桌面模式下，方向键与滚轮可能无法传入壁纸。</p>" : "<span>KEYBOARD CONTROLS</span><p><kbd>←</kbd><kbd>→</kbd> 切列 <kbd>↑</kbd><kbd>↓</kbd> 选档 <kbd>ENTER</kbd> 读取 <kbd>/</kbd> 检索 <kbd>ESC</kbd> 返回</p>"}</div><div class="settings-bottom">${!isWallpaper && document.fullscreenEnabled ? '<button data-action="fullscreen">FULLSCREEN <span>↗</span></button>' : ""}<button data-action="restart">REINITIALIZE SYSTEM <span>↻</span></button></div><div class="modal-bottom"><span>PASS ARCHIVE / 0.4.4 · 使用 MiSans 字体（小米） <a href="${assetUrl("fonts/MiSans-license.pdf")}" target="_blank" rel="noopener">字体许可</a></span><span>POWERED BY RHINE LAB</span></div>`;
+  return `<h2>SYSTEM SETTINGS<small>终端偏好设置</small></h2><p class="settings-intro">PASS ARCHIVE · 本机收藏档案</p><div class="pass-host-links"><button data-action="pass-account">账号与同步 ↗</button><button data-action="saved">关注系列 ↗</button><button data-action="pass-catalog">通行证目录 ↗</button><button data-action="pass-collection">我的收藏 ↗</button><button data-action="pass-stats">收藏统计 ↗</button><button data-action="pass-settings">收藏备份与数据设置 ↗</button><button data-action="credits">来源与许可 ↗</button></div>${isWallpaper ? '<p class="wallpaper-settings-note">每次启动都会读取 Wallpaper Engine 中的设置。在此修改仅对当前运行生效，无法持久保存；如需保留，请在 Wallpaper Engine 的壁纸属性中调整。</p>' : ""}<div class="settings-list">${themeSettingsMarkup(prefs.colorTheme === "dark")}${!isWallpaper ? `<label><div><strong>SUPER PERFORMANCE</strong><span>降低三维画质和渲染分辨率，保留完整动效；关闭后恢复原画质</span></div><input type="checkbox" data-pref="superPerformance" ${prefs.superPerformance ? "checked" : ""}/><i class="toggle"></i></label>` : ""}${workbench?.settingsMarkup() ?? ""}${audioSettingsMarkup(prefs)}</div>${motionPreferenceNoteMarkup()}${motionSettingsMarkup(prefs.motion, prefs.motionPreset)}${qualityMarkup(prefs.rendering)}${pwaSettingsMarkup()}<div class="settings-shortcuts">${isWallpaper ? "<span>DESKTOP CONTROLS</span><p>拖动阵列或点击界面按钮浏览档案。桌面模式下，方向键与滚轮可能无法传入壁纸。</p>" : "<span>KEYBOARD CONTROLS</span><p><kbd>←</kbd><kbd>→</kbd> 切列 <kbd>↑</kbd><kbd>↓</kbd> 选档 <kbd>ENTER</kbd> 读取 <kbd>/</kbd> 检索 <kbd>ESC</kbd> 返回</p>"}</div><div class="settings-bottom">${!isWallpaper && document.fullscreenEnabled ? '<button data-action="fullscreen">FULLSCREEN <span>↗</span></button>' : ""}<button data-action="restart">REINITIALIZE SYSTEM <span>↻</span></button></div><div class="modal-bottom"><span>PASS ARCHIVE / 0.4.5 · 使用 MiSans 字体（小米） <a href="${assetUrl("fonts/MiSans-license.pdf")}" target="_blank" rel="noopener">字体许可</a></span><span>POWERED BY RHINE LAB</span></div>`;
 }
 
 document.addEventListener("input", (e) => {
@@ -1837,9 +1837,3 @@ window.addEventListener("message",event=>{
  if(message.type==="replay"){passPaused=false;replayBoot(true);}
  if(message.type==="theme"&&(message.theme==="dark"||message.theme==="light")){prefs.colorTheme=message.theme;savePrefs();}
 });
-
-function exportDocument(record: (typeof records)[number]) {
- let url=documentExports.get(record.seriesId);
- if(!url){url=URL.createObjectURL(new Blob([`${record.title}\n${record.abstract}\n\n${record.findings.join("\n")}\n`],{type:"text/plain;charset=utf-8"}));documentExports.set(record.seriesId,url);}
- return url;
-}

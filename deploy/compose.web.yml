@@ -1,0 +1,18 @@
+# Add only the frontend to an existing API/PostgreSQL deployment.
+services:
+  web:
+    image: passarchive-web:${PASSARCHIVE_VERSION:-0.4.5}
+    build:
+      context: ../web
+      target: ${PASSARCHIVE_WEB_BUILD_TARGET:-web}
+    restart: unless-stopped
+    ports: ["127.0.0.1:${PASSARCHIVE_WEB_PORT:-18083}:8080"]
+    read_only: true
+    tmpfs: ["/tmp:size=16m,mode=1777"]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 128m
+    pids_limit: 64
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}

@@ -26,6 +26,8 @@ npm run dev
 
 开发构建可用 `/?terminal-scene=archive` 或 `detail` 直接检查场景，`?terminal-time=8.6` 检查定帧开屏；正式构建忽略这些调试参数。predev/prebuild 自动应用 Rolling Number 文字测量补丁。
 
+移动端解密标注可在开发环境打开 `/terminal.html?time=31.5&freeze=1&layout=viewport` 定帧检查；`layout=viewport` 保留真实手机比例，省略时使用原片校准比例。详情操作在紧凑视口中上下等宽排列，档案文本导出入口已移除；收藏备份仍在二维数据设置中提供。
+
 资源位于 `web/public/rhine/`，包含两个模型、MiSans 按需分片、配乐和来源说明。固定文字使用上游描边图形，不分发 Novecento 字体。MiSans、文字图形、短音和游戏标志不按本项目 MIT 重新授权，完整范围见 `THIRD_PARTY_NOTICES.md`。
 
 离线缓存由宿主 `sw.js` 统一管理，预缓存真实构建包、目录、两个模型及四个 ASCII 字体分片；其他资源按访问缓存。所有私人账号接口排除缓存，IndexedDB 收藏与静态缓存分开。

@@ -1,0 +1,10 @@
+node_modules
+.git
+.env
+.env.*
+*.local.*
+tests
+**/*.key
+**/*.pem
+**/*.sqlite3
+.DS_Store

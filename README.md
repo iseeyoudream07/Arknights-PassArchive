@@ -51,7 +51,7 @@ npm run build
 npm test
 ```
 
-生产静态文件位于 `web/dist/`。`npm run preview` 仅预览静态页面，不转发账号 API；访客功能可本机使用，账号同步需同源 Django。完整部署步骤见 [部署文档](docs/deployment-guide.md)。
+生产静态文件位于 `web/dist/`。`npm run preview` 仅预览静态页面，不转发账号 API；访客功能可本机使用，账号同步需同源 Django。正式部署使用独立 Web、API 和 PostgreSQL 容器，HTTPS 入口代理到仅监听本机的容器端口；前端可从源码构建，也可封装已验证的静态包。完整步骤见 [部署文档](docs/deployment-guide.md)。
 
 Release 提供：
 

@@ -913,20 +913,6 @@ button {
 .solid-button:hover {
   background: #4b4a3b;
 }
-.export-button {
-  font-size: 11px;
-  letter-spacing: 1px;
-  width: 105px;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 46px;
-}
-.export-button span {
-  font-size: 23px;
-  line-height: 1;
-}
 .detail-footnote {
   display: flex;
   justify-content: space-between;
@@ -1816,18 +1802,6 @@ button {
 }
 .archive-callout {
   top: 471px;
-}
-.export-button {
-  color: inherit;
-  text-decoration: none;
-  cursor: pointer;
-}
-.export-button:hover {
-  color: #947444;
-}
-.export-button:focus-visible {
-  outline: 2px solid #a67d48;
-  outline-offset: 7px;
 }
 
 [data-mode="boot"][data-boot="array"] .three-scene {

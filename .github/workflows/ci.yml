@@ -22,6 +22,13 @@ jobs:
       - run: npm run build && npm test
         working-directory: web
       - run: node tools/upstream_oracle.mjs
+      - name: Build and verify the frontend Docker runtime
+        run: |
+          docker build -t passarchive-web:ci web
+          docker run -d --name passarchive-web-ci --read-only --tmpfs /tmp:size=16m,mode=1777 --cap-drop ALL --security-opt no-new-privileges:true --memory 128m --pids-limit 64 -p 127.0.0.1:18083:8080 passarchive-web:ci
+          trap 'docker rm -f passarchive-web-ci >/dev/null' EXIT
+          curl --fail --retry 10 --retry-connrefused --retry-delay 1 http://127.0.0.1:18083/healthz
+          python3 tools/verify_web_container.py
   api:
     runs-on: ubuntu-latest
     services:

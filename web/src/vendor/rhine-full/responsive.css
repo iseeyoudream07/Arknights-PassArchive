@@ -97,7 +97,6 @@
 :is([data-layout="compact"], [data-layout="portrait"]) .tab-panel p { font-size: 15px; text-align: left; }
 :is([data-layout="compact"], [data-layout="portrait"]) .detail-actions { gap: 12px; }
 :is([data-layout="compact"], [data-layout="portrait"]) .solid-button { font-size: 9px; padding: 0 12px; gap: 10px; }
-:is([data-layout="compact"], [data-layout="portrait"]) .export-button { width: 88px; font-size: 10px; }
 :is([data-layout="compact"], [data-layout="portrait"]) .detail-footnote { gap: 12px; line-height: 1.8; flex-wrap: wrap; }
 
 /* Portrait keeps the specimen above an independently scrollable document. */
