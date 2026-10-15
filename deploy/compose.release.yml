@@ -1,0 +1,74 @@
+services:
+  postgres:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: passarchive
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_admin_password
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=peer"
+    secrets: [postgres_admin_password, postgres_app_password]
+    volumes:
+      - account_database:/var/lib/postgresql/data
+      - ./postgres-init.sh:/docker-entrypoint-initdb.d/01-account-role.sh:ro
+    command: [postgres, -c, max_connections=40, -c, shared_buffers=64MB]
+    networks: [accounts]
+    mem_limit: 256m
+    pids_limit: 128
+    security_opt: [no-new-privileges:true]
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+    healthcheck:
+      test: [CMD, pg_isready, -U, postgres, -d, passarchive]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: passarchive-api:${PASSARCHIVE_VERSION:-0.4.4}
+    restart: unless-stopped
+    ports: ["127.0.0.1:${PASSARCHIVE_API_PORT:-18082}:8000"]
+    environment:
+      DJANGO_DEBUG: "false"
+      DJANGO_SECRET_KEY_FILE: /run/secrets/django_secret_key
+      DJANGO_ALLOWED_HOSTS: "${PASSARCHIVE_HOST:-passarchive.example},localhost,127.0.0.1"
+      CSRF_TRUSTED_ORIGINS: "${PASSARCHIVE_ORIGIN:-https://passarchive.example}"
+      DB_HOST: postgres
+      DB_NAME: passarchive
+      DB_USER: pass_app
+      DB_PASSWORD_FILE: /run/secrets/postgres_app_password
+    secrets: [postgres_app_password, django_secret_key]
+    depends_on:
+      postgres: {condition: service_healthy}
+    networks: [accounts, web]
+    read_only: true
+    tmpfs: ["/tmp:size=16m,mode=1777"]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    pids_limit: 128
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/', timeout=5)"]
+      interval: 15s
+      timeout: 8s
+      retries: 4
+      start_period: 15s
+secrets:
+  django_secret_key:
+    file: ${PASSARCHIVE_SECRET_DIR:-/srv/passarchive/secrets}/django-secret-key
+  postgres_admin_password:
+    file: ${PASSARCHIVE_SECRET_DIR:-/srv/passarchive/secrets}/postgres-admin-password
+  postgres_app_password:
+    file: ${PASSARCHIVE_SECRET_DIR:-/srv/passarchive/secrets}/postgres-app-password
+volumes:
+  account_database: {}
+networks:
+  accounts:
+    internal: true
+  web: {}

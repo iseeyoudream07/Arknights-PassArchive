@@ -1,0 +1,21 @@
+#account-access{font-size:11px;min-height:36px;padding:5px 8px;white-space:nowrap}#sync-indicator{font-size:9px;color:var(--muted);white-space:nowrap}.account-link{display:inline-flex;align-items:center;min-height:42px}.account-heading{display:flex;gap:15px;align-items:center;justify-content:space-between;margin:24px 0 15px}.account-heading strong{font-size:23px;font-weight:450;overflow-wrap:anywhere;min-width:0}.sync-chip{border:1px solid var(--line);font-size:10px;padding:6px 10px;white-space:nowrap;color:var(--muted)}.sync-chip[data-status=synced]{color:var(--accent);border-color:var(--accent)}.account-sync-message{overflow-wrap:anywhere}.guest-transfer,.sync-conflicts{border-top:1px solid var(--line);padding-top:18px;margin-top:22px}.guest-transfer p,.sync-conflicts p{font-size:11px;line-height:1.9;color:var(--muted)}.sync-conflicts h3{font-size:15px;font-weight:500;margin:0 0 12px}.sync-conflicts article{padding:13px 0;border-bottom:1px solid var(--line)}.sync-conflicts article strong{font-size:11px;font-weight:500}.sync-conflicts article p{margin:7px 0 0}.sync-conflicts .button-row{margin-top:18px}#account-panel .text-button{margin:0;min-height:40px}.account-heading .sync-chip[data-status=conflict],.sync-chip[data-status=error]{color:var(--accent)}
+@media(max-width:640px){.topbar>.mono{display:none}#connection{display:none}.topbar>div{width:100%;justify-content:space-between;gap:8px}#sync-indicator{font-size:8px}#account-access{font-size:10px}.account-heading strong{font-size:21px}.guest-transfer,.sync-conflicts{margin-top:18px}.sync-conflicts .button-row{flex-direction:column;align-items:stretch}}
+.topbar>div{gap:18px;font-family:MiSans,"PingFang SC",system-ui,sans-serif}
+.topbar :is(#account-access,#sync-indicator,#connection){font-size:12px;line-height:1.5;font-weight:400}
+.topbar #theme-toggle{display:grid;place-items:center;width:36px;min-height:36px;font-size:18px;line-height:1;padding:0}
+@media(max-width:640px){
+  #app{--mobile-header-row:44px;--mobile-header-top:14px}
+  .sidebar{padding-top:var(--mobile-header-top)}
+  .sidebar .brand{min-height:var(--mobile-header-row);gap:7px}
+  .sidebar .brand svg{width:32px;height:32px}
+  .sidebar .brand>span{font-size:12px;letter-spacing:.08em}
+  .sidebar nav{margin-top:10px}
+  .topbar{height:0;border-bottom:0}
+  .topbar>div{position:fixed;top:var(--mobile-header-top);right:17px;z-index:7;display:flex;align-items:center;gap:6px;width:max-content;max-width:calc(100vw - 34px);height:var(--mobile-header-row);justify-content:flex-end}
+  .topbar :is(#account-access,#sync-indicator){font-size:11px}
+  .topbar #account-access{min-height:var(--mobile-header-row);padding:0}
+  .topbar #sync-indicator{display:flex;align-items:center;height:var(--mobile-header-row)}
+  .topbar #theme-toggle{position:static;width:28px;min-height:var(--mobile-header-row)}
+  .topbar #terminal-mobile-return{display:inline-flex;align-items:center;min-height:var(--mobile-header-row);border:0;padding:0;font-size:11px;letter-spacing:0;margin:0;white-space:nowrap}
+}
+@media(max-width:374px){.sidebar .brand>span{display:none}}

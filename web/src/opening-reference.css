@@ -1,0 +1,340 @@
+/* RhineLabUI, Copyright (c) 2026 LBEILC, MIT. Scoped source geometry. */
+#opening-stage .brand {
+  position: absolute;
+  left: 59px;
+  top: 114px;
+  z-index: 5;
+  line-height: 1;
+  user-select: none;
+  width: 270px;
+  white-space: nowrap;
+}
+#opening-stage .brand h1 {
+  font-size: 44px;
+  letter-spacing: 2.324px;
+  line-height: 48px;
+  margin: 0;
+  font-weight: 750;
+}
+#opening-stage .brand > div {
+  font-size: 19px;
+  line-height: 23px;
+  letter-spacing: 0.587px;
+  font-weight: 600;
+}
+#opening-stage .brand p {
+  margin: 0;
+  font-size: 35px;
+  line-height: 40px;
+  letter-spacing: 0;
+  word-spacing: 0;
+  display: flex;
+  justify-content: space-between;
+}
+#opening-stage .brand p b {
+  font-weight: 750;
+  letter-spacing: 3px;
+}
+#opening-stage .brand-analysis {
+  position: relative;
+  display: block;
+  width: 189px;
+  height: 40px;
+}
+#opening-stage .brand-analysis > span {
+  position: absolute;
+  top: 0;
+  letter-spacing: 0;
+  font-kerning: none;
+}
+#opening-stage .powered {
+  position: absolute;
+  right: 59px;
+  bottom: 108px;
+  font-size: 18px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 24px;
+}
+#opening-stage .powered b {
+  font-weight: 750;
+}
+#opening-stage .powered i {
+  height: 6px;
+  width: 25px;
+  background: #090a08;
+  display: inline-block;
+  margin-left: 11px;
+}
+#opening-stage .boot-background {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 51% 48%,
+    #e7e7e1 0%,
+    #e3e1dc 76%,
+    #e4dfdb 100%
+  );
+  transition: none;
+  pointer-events: none;
+}
+#opening-stage .boot-background svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  filter: blur(2px);
+}
+#opening-stage .boot {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+#opening-stage .boot-logo {
+  position: absolute;
+  width: 296px;
+  height: 177px;
+  left: 518px;
+  top: 462px;
+  transition: none;
+  opacity: 0;
+}
+#opening-stage .boot-logo svg {
+  width: 100%;
+  height: 100%;
+}
+#opening-stage .auth-status {
+  position: absolute;
+  left: 931px;
+  top: 529px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+  opacity: 0;
+}
+#opening-stage .auth-status > span:first-child {
+  font-size: 14px;
+}
+#opening-stage .auth-status i {
+  width: 3px;
+  height: 22px;
+  background: #282b26;
+  animation: blink 0.8s steps(1) infinite;
+}
+#opening-stage .access-text {
+  position: absolute;
+  top: 532px;
+  left: 800px;
+  width: 420px;
+  text-align: left;
+  font-size: 18px;
+  opacity: 0;
+}
+#opening-stage .scan {
+  position: absolute;
+  left: 410px;
+  top: -10px;
+  width: 1100px;
+  height: 1100px;
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    transform 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s;
+}
+#opening-stage .scan svg {
+  width: 100%;
+  height: 100%;
+}
+#opening-stage .scan > span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+#opening-stage .scan-track {
+  stroke: #f7f5f0;
+  stroke-width: 8;
+}
+#opening-stage .scan-ring {
+  stroke: #aaa9a0;
+  stroke-width: 8;
+  transform-origin: center;
+  stroke-dasharray: 2400 900;
+}
+#opening-stage .ring-one {
+  animation: orbit 8s linear infinite;
+}
+#opening-stage .ring-two {
+  stroke-width: 9;
+  stroke-dasharray: 590 500;
+  animation: orbit 4s linear infinite reverse;
+}
+#opening-stage .ring-three {
+  stroke: #f4f3eb;
+  stroke-width: 3;
+  stroke-dasharray: 600 200;
+  animation: orbit 16s linear infinite;
+}
+#opening-stage .scan-nodes {
+  fill: #e7c69b;
+  filter: drop-shadow(0 0 15px #ddb788);
+  transform-origin: center;
+  animation: orbit 8s linear infinite;
+}
+#opening-stage .welcome {
+  position: absolute;
+  top: 403px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 55px;
+  font-weight: 700;
+  line-height: 1.05;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s,
+    transform 1s;
+}
+#opening-stage .welcome strong {
+  display: inline-block;
+  background: #080a08;
+  color: #ece9e4;
+  padding: 4px 10px 6px;
+  font-size: 51px;
+  line-height: 1;
+}
+#opening-stage .welcome-logo {
+  width: 203px;
+  height: 121px;
+  margin: 58px auto 0;
+}
+#opening-stage .welcome-logo svg {
+  width: 100%;
+  height: 100%;
+}
+#opening-stage .skip {
+  position: absolute;
+  right: 60px;
+  top: 121px;
+  z-index: 10;
+  font-size: 14px;
+  letter-spacing: 1.1px;
+  opacity: 0.55;
+  padding: 10px 0;
+}
+#opening-stage .skip span {
+  margin-left: 28px;
+  font-size: 23px;
+}
+#opening-stage .skip:hover {
+  opacity: 1;
+}
+#opening-stage .brand,
+#opening-stage .powered {
+  transition: opacity 0.6s;
+}
+
+#opening-stage[data-mode="boot"] .brand,
+#opening-stage[data-mode="boot"] .powered,
+#opening-stage[data-mode="boot"] .boot * {
+  transition: none;
+  animation: none;
+}
+#opening-stage[data-mode="boot"] .auth-status {
+  animation: none;
+}
+#opening-stage .auth-status i {
+  display: none;
+}
+#opening-stage .boot-white {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+}
+#opening-stage .scan {
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  transform: none;
+  transition: none;
+}
+#opening-stage .scan > span {
+  font-size: 22px;
+  white-space: nowrap;
+  padding-left: 0;
+}
+#opening-stage .welcome {
+  left: 720px;
+  top: 403px;
+  width: 480px;
+  height: 340px;
+  transform-origin: 50% 44%;
+  transition: none;
+}
+#opening-stage .welcome-heading {
+  position: relative;
+  z-index: 1;
+  line-height: 65px;
+  font-size: 55px;
+  white-space: nowrap;
+}
+#opening-stage .welcome-panel {
+  position: absolute;
+  top: -59px;
+  left: 5px;
+  width: 470px;
+  height: 392px;
+  background: #080a08;
+}
+#opening-stage .welcome-company {
+  position: absolute;
+  top: 67px;
+  left: 35px;
+  width: 410px;
+  height: 60px;
+}
+#opening-stage .welcome-company strong {
+  display: block;
+  position: absolute;
+  inset: 0;
+  padding: 5px 8px;
+  background: transparent;
+  color: #080a08;
+  font-size: 48px;
+  line-height: 50px;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+#opening-stage .welcome-company .welcome-highlight {
+  background: #080a08;
+  color: #eeede8;
+}
+#opening-stage .welcome-database {
+  position: absolute;
+  top: 134px;
+  left: 0;
+  width: 100%;
+  font-size: 36px;
+  line-height: 43px;
+  white-space: nowrap;
+}
+#opening-stage .welcome-logo {
+  position: absolute;
+  top: 187px;
+  left: 138.5px;
+  margin: 0;
+}
+#opening-stage[data-mode="archive"] .boot,
+#opening-stage[data-mode="detail"] .boot {
+  visibility: hidden;
+}
+

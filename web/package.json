@@ -1,0 +1,25 @@
+{
+  "name": "arknights-pass-web",
+  "version": "0.4.4",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build && node scripts/build-cache-manifest.mjs",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --import ./tests/register-typescript.mjs --test tests/core.test.ts tests/opening.test.ts tests/rhine.test.ts tests/sw.test.mjs tests/sync.test.ts tests/account-sync.test.ts tests/list-ui.test.ts tests/archive-writes.test.ts",
+    "predev": "node scripts/patch-rolling-number.mjs",
+    "prebuild": "node scripts/patch-rolling-number.mjs"
+  },
+  "devDependencies": {
+    "@types/three": "0.183.1",
+    "fake-indexeddb": "6.2.5",
+    "jsdom": "27.4.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.1.0"
+  },
+  "dependencies": {
+    "@kitlangton/rolling-number": "0.4.1",
+    "three": "0.183.2"
+  }
+}

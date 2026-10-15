@@ -1,0 +1,24 @@
+#rhine-terminal {position:fixed;inset:0;z-index:40;background:#e8e5e1;}
+#rhine-terminal[hidden] {display:none;}
+#rhine-terminal iframe {display:block;width:100%;height:100%;border:0;}
+body.rhine-terminal-active {overflow:hidden;}
+.terminal-return {width:100%;margin-bottom:20px;border:1px solid var(--line);padding:12px;text-align:left;font-size:11px;letter-spacing:.1em;}
+#terminal-mobile-return {display:none;}
+dialog[data-transition=opening]::backdrop {animation:terminal-backdrop-enter 300ms cubic-bezier(.22,1,.36,1) both;}
+dialog[data-transition=closing]::backdrop {animation:terminal-backdrop-exit 200ms cubic-bezier(.4,0,1,1) both;}
+@keyframes terminal-backdrop-enter {from{opacity:0;}to{opacity:1;}}
+@keyframes terminal-backdrop-exit {to{opacity:0;}}
+.series-card,.pass-card {transform-origin:50% 60%;}
+#app {color:var(--ink);}
+.overview strong .archive-rolling-number,.overview strong .archive-rolling-number span {font-size:inherit;color:inherit;}
+.pass-card.is-owned {transition:border-color 220ms ease,background-color 220ms ease;}
+.sidebar nav button {position:relative;}
+.sidebar nav button:after {content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform 180ms ease;}
+.sidebar nav button[aria-current=page]:after {transform:scaleX(1);}
+@media(max-width:640px){#terminal-mobile-return{display:inline-flex;min-height:36px;font-size:9px;padding:5px 8px;margin-right:8px;border:1px solid var(--line);}.terminal-return{display:none;}}
+@media(prefers-reduced-motion:reduce){dialog::backdrop{animation:none!important;}}
+
+#content h1[tabindex="-1"]:focus {outline:none;}
+.sidebar-bottom .terminal-return{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:0;min-height:50px;padding:13px 11px;font-size:12px;letter-spacing:.03em;border-inline:0;border-block:1px solid var(--line);transition:color 180ms ease,border-color 180ms ease}
+.sidebar-bottom .terminal-return i{font-style:normal;font-size:18px}
+.sidebar-bottom .terminal-return:hover{color:var(--accent);border-color:var(--accent)}
