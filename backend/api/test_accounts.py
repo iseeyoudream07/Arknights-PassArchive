@@ -6,7 +6,7 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 from django.contrib.auth import get_user_model
-from django.db import close_old_connections, connection
+from django.db import close_old_connections, connection, connections
 from django.test import Client, TestCase, TransactionTestCase, override_settings
 from django.utils import translation
 
@@ -231,11 +231,24 @@ class PostgreSQLConcurrencyTests(TransactionTestCase):
         # 在独立数据库连接中同步发起写入，构造真实并发竞争。
         def write(index):
             close_old_connections()
-            barrier.wait(timeout=10)
-            result = clients[index].put('/api/v1/me/archive/', json.dumps({'expected_user_id': user.pk, 'base_revision': 0,
-                'backup': {'schema_version': 1, 'collection': {pass_id: {'owned': True, 'market': str(20 + index)}}}}), content_type='application/json')
-            close_old_connections()
-            return result.status_code
+            try:
+                barrier.wait(timeout=10)
+                result = clients[index].put(
+                    '/api/v1/me/archive/',
+                    json.dumps({
+                        'expected_user_id': user.pk,
+                        'base_revision': 0,
+                        'backup': {
+                            'schema_version': 1,
+                            'collection': {pass_id: {'owned': True, 'market': str(20 + index)}},
+                        },
+                    }),
+                    content_type='application/json',
+                )
+                return result.status_code
+            finally:
+                # 健康的持久连接也必须在线程退出前关闭，否则 PostgreSQL 无法删除测试库。
+                connections.close_all()
         with ThreadPoolExecutor(max_workers=2) as pool:
             self.assertEqual(sorted(pool.map(write, [0, 1])), [200, 409])
         self.assertEqual(CloudArchive.objects.get(user=user).revision, 1)

@@ -10,7 +10,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.core.management.base import CommandError
-from django.db import close_old_connections, connection
+from django.db import close_old_connections, connection, connections
 from django.test import Client, TestCase, TransactionTestCase, override_settings
 
 from .domain import get_catalog
@@ -212,11 +212,23 @@ class CatalogPostgreSQLConcurrencyTests(TransactionTestCase):
             close_old_connections()
             try:
                 barrier.wait(timeout=10)
-                return clients[index].post(ADMIN, json.dumps({'expected_user_id': root.pk, 'base_revision': 0,
-                    'operations': [{'entity': 'pass', 'series_id': series['id'], 'id': series['passes'][0]['id'],
-                                    'data': {'label': f'并发编辑 {index}'}}]}), content_type='application/json').status_code
+                return clients[index].post(
+                    ADMIN,
+                    json.dumps({
+                        'expected_user_id': root.pk,
+                        'base_revision': 0,
+                        'operations': [{
+                            'entity': 'pass',
+                            'series_id': series['id'],
+                            'id': series['passes'][0]['id'],
+                            'data': {'label': f'并发编辑 {index}'},
+                        }],
+                    }),
+                    content_type='application/json',
+                ).status_code
             finally:
-                close_old_connections()
+                # 在线程内释放所有数据库连接，不让持久连接阻止测试库清理。
+                connections.close_all()
 
         with ThreadPoolExecutor(max_workers=2) as pool:
             self.assertEqual(sorted(pool.map(write, [0, 1])), [200, 409])
