@@ -1,0 +1,10 @@
+/* 管理入口复用侧栏编号、细线和强调色；hidden 不被布局样式覆盖。 */
+.admin-access:not([hidden]) { display: flex; align-items: center; gap: 12px; min-height: 52px; margin-top: 14px; padding: 14px 0; border-top: 1px solid var(--line); color: var(--accent); font-size: 13px; text-decoration: none; }
+.admin-access span { font: 10px monospace; color: var(--muted); }
+.admin-access i { margin-left: auto; font-style: normal; }
+.admin-access:hover { color: var(--ink); }
+@media (max-width:640px) {
+  .sidebar nav { flex-wrap: wrap; }
+  .admin-access:not([hidden]) { margin: 0; padding: 0 6px; min-height: 44px; border: 0; gap: 6px; font-size: 11px; }
+  .admin-access i { display: none; }
+}
