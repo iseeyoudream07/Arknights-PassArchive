@@ -1,3 +1,8 @@
+/*
+ * 模块导读：参考帧测量值和连续插值，用于标志、文字及扫描轨迹。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 // Reference-space measurements (1920×1080, 25 fps). See reference/measure-boot.py.
 // Monotone cubic interpolation preserves measured speeds between source frames;
 // unlike easing each interval separately, it does not stop at every keyframe.

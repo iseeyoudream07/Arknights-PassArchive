@@ -1,3 +1,8 @@
+/*
+ * 模块导读：开屏文字图形的定位、缩放和显示样式。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 /* Fixed Novecento phrase drawings; the licensed font files are not embedded. */
 .boot-phrase {
   display: inline-flex;

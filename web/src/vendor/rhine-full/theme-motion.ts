@@ -1,3 +1,8 @@
+/*
+ * 模块导读：按阵列单元传播主题切换波，计算背景和卡片各自的过渡进度。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 export type ThemeCell = { row: number; lane: number };
 const key = (cell: ThemeCell) => `${cell.lane}:${cell.row}`;
 const ease = (t: number) => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };

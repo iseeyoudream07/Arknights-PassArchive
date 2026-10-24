@@ -1,3 +1,8 @@
+/* 独立开屏标志描绘的参考帧轨迹。
+ * 此目录为独立开屏参考子集；整站三维终端使用 vendor/rhine-full。
+ * 保留原有版权和来源声明；项目阅读路线见 docs/code-guide-zh.md。
+ */
+
 import { track } from "./boot-tracks.ts";
 
 // Position along the single shared contour, unwrapped across its closing point.

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：加载开屏所需字体并绘制固定台词字形，与开屏时间轴配合。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import artwork from "./boot-lettering-art.json";
 import "./boot-lettering.css";
 import { assetUrl } from "./asset-url.ts";

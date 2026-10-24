@@ -1,3 +1,5 @@
+# 前端容器模板，可与已有 API/数据库组合；构建目标支持源码构建和已验证产物。
+
 # Add only the frontend to an existing API/PostgreSQL deployment.
 services:
   web:
@@ -6,7 +8,9 @@ services:
       context: ../web
       target: ${PASSARCHIVE_WEB_BUILD_TARGET:-web}
     restart: unless-stopped
+    # 只绑定宿主机回环地址，公开访问由 HTTPS 入口代理。
     ports: ["127.0.0.1:${PASSARCHIVE_WEB_PORT:-18083}:8080"]
+    # 运行时文件系统只读，Nginx 临时文件使用下方 tmpfs。
     read_only: true
     tmpfs: ["/tmp:size=16m,mode=1777"]
     cap_drop: [ALL]

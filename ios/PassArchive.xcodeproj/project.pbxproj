@@ -1,27 +1,343 @@
 // !$*UTF8*$!
-{archiveVersion=1; classes={}; objectVersion=56; objects={
-C79F963DD28580D050DDB2BC = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PassArchive/Models.swift"; sourceTree = "<group>";};
-5D19452EA34B49EF43360D88 = {isa = PBXBuildFile; fileRef = C79F963DD28580D050DDB2BC;};
-71B8C92BFD158A608C4CE31D = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PassArchive/ArchiveStore.swift"; sourceTree = "<group>";};
-13C2D55AAB007E7A032F7A9C = {isa = PBXBuildFile; fileRef = 71B8C92BFD158A608C4CE31D;};
-576644ED5444DF5C255240CD = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PassArchive/PassArchiveApp.swift"; sourceTree = "<group>";};
-947FC164876597418DE50FBF = {isa = PBXBuildFile; fileRef = 576644ED5444DF5C255240CD;};
-858955FC9D651D393F9AE1F7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PassArchive/ContentView.swift"; sourceTree = "<group>";};
-29A220DDE81458AC85BA489B = {isa = PBXBuildFile; fileRef = 858955FC9D651D393F9AE1F7;};
-CC0B6E578262E8354FF2C5D9 = {isa = PBXFileReference; lastKnownFileType = text.json; path = "PassArchive/catalog.json"; sourceTree = "<group>";};
-1CE9DA91768139184DBB26F3 = {isa = PBXBuildFile; fileRef = CC0B6E578262E8354FF2C5D9;};
-38A007151ABE87CC01A5B6E9 = {isa=PBXFileReference; explicitFileType=wrapper.application; path=PassArchive.app; sourceTree=BUILT_PRODUCTS_DIR;};
-FBDC4F23F93125BBEEAE800C = {isa=PBXGroup; children=(38A007151ABE87CC01A5B6E9,); name=Products; sourceTree="<group>";};
-B28B7AF69320201D1CF206EB = {isa=PBXGroup; children=(C79F963DD28580D050DDB2BC,71B8C92BFD158A608C4CE31D,576644ED5444DF5C255240CD,858955FC9D651D393F9AE1F7,CC0B6E578262E8354FF2C5D9,FBDC4F23F93125BBEEAE800C,); sourceTree="<group>";};
-BCE16DD0260827ECF338C787 = {isa=PBXSourcesBuildPhase; buildActionMask=2147483647; files=(5D19452EA34B49EF43360D88,13C2D55AAB007E7A032F7A9C,947FC164876597418DE50FBF,29A220DDE81458AC85BA489B,); runOnlyForDeploymentPostprocessing=0;};
-0189424A5A60FED329FA868E = {isa=PBXResourcesBuildPhase; buildActionMask=2147483647; files=(1CE9DA91768139184DBB26F3,); runOnlyForDeploymentPostprocessing=0;};
-7561BFB015D8F536760CB671 = {isa=PBXFrameworksBuildPhase; buildActionMask=2147483647; files=(); runOnlyForDeploymentPostprocessing=0;};
-89E1FD6268CC0F221A2BE178 = {isa=XCBuildConfiguration; buildSettings={SDKROOT=iphoneos; IPHONEOS_DEPLOYMENT_TARGET=17.0; SWIFT_VERSION=5.0; CLANG_ENABLE_MODULES=YES;SWIFT_OPTIMIZATION_LEVEL="-Onone"; DEBUG_INFORMATION_FORMAT=dwarf;}; name=Debug;};
-E6DE6C99132752C914FEF632 = {isa=XCBuildConfiguration; buildSettings={SDKROOT=iphoneos; IPHONEOS_DEPLOYMENT_TARGET=17.0; SWIFT_VERSION=5.0; CLANG_ENABLE_MODULES=YES;SWIFT_OPTIMIZATION_LEVEL="-O";}; name=Release;};
-862894B703A6DEDF96A9DD6C = {isa=XCConfigurationList; buildConfigurations=(89E1FD6268CC0F221A2BE178,E6DE6C99132752C914FEF632,); defaultConfigurationIsVisible=0; defaultConfigurationName=Release;};
-7082CC0B6FC1282FCEABD07A = {isa=XCBuildConfiguration; buildSettings={SDKROOT=iphoneos; IPHONEOS_DEPLOYMENT_TARGET=17.0; SWIFT_VERSION=5.0; CLANG_ENABLE_MODULES=YES;PRODUCT_BUNDLE_IDENTIFIER=win.yukkuri.arknights.passarchive; PRODUCT_NAME="$(TARGET_NAME)"; GENERATE_INFOPLIST_FILE=YES; INFOPLIST_KEY_CFBundleDisplayName="通行认证档案"; INFOPLIST_KEY_UILaunchScreen_Generation=YES; INFOPLIST_KEY_UIApplicationSceneManifest_Generation=YES; TARGETED_DEVICE_FAMILY="1,2"; MARKETING_VERSION=0.1.0; CURRENT_PROJECT_VERSION=1; CODE_SIGN_STYLE=Automatic;SWIFT_OPTIMIZATION_LEVEL="-Onone"; DEBUG_INFORMATION_FORMAT=dwarf;}; name=Debug;};
-639A7CA24D39909E713B47F7 = {isa=XCBuildConfiguration; buildSettings={SDKROOT=iphoneos; IPHONEOS_DEPLOYMENT_TARGET=17.0; SWIFT_VERSION=5.0; CLANG_ENABLE_MODULES=YES;PRODUCT_BUNDLE_IDENTIFIER=win.yukkuri.arknights.passarchive; PRODUCT_NAME="$(TARGET_NAME)"; GENERATE_INFOPLIST_FILE=YES; INFOPLIST_KEY_CFBundleDisplayName="通行认证档案"; INFOPLIST_KEY_UILaunchScreen_Generation=YES; INFOPLIST_KEY_UIApplicationSceneManifest_Generation=YES; TARGETED_DEVICE_FAMILY="1,2"; MARKETING_VERSION=0.1.0; CURRENT_PROJECT_VERSION=1; CODE_SIGN_STYLE=Automatic;SWIFT_OPTIMIZATION_LEVEL="-O";}; name=Release;};
-C57128001CE614BF8549D6BB = {isa=XCConfigurationList; buildConfigurations=(7082CC0B6FC1282FCEABD07A,639A7CA24D39909E713B47F7,); defaultConfigurationIsVisible=0; defaultConfigurationName=Release;};
-0E8A3AD980EC179856012B7E = {isa=PBXNativeTarget; buildConfigurationList=C57128001CE614BF8549D6BB; buildPhases=(BCE16DD0260827ECF338C787,7561BFB015D8F536760CB671,0189424A5A60FED329FA868E,); buildRules=(); dependencies=(); name=PassArchive; productName=PassArchive; productReference=38A007151ABE87CC01A5B6E9; productType="com.apple.product-type.application";};
-98F54143AB4E86B28C3AFEE0 = {isa=PBXProject; attributes={BuildIndependentTargetsInParallel=YES; LastUpgradeCheck=2700;}; buildConfigurationList=862894B703A6DEDF96A9DD6C; compatibilityVersion="Xcode 14.0"; developmentRegion=zh-Hans; knownRegions=(en,Base,zh-Hans); mainGroup=B28B7AF69320201D1CF206EB; productRefGroup=FBDC4F23F93125BBEEAE800C; projectDirPath=""; projectRoot=""; targets=(0E8A3AD980EC179856012B7E,);};
-}; rootObject=98F54143AB4E86B28C3AFEE0;}
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		13C2D55AAB007E7A032F7A9C /* PassArchive/ArchiveStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B8C92BFD158A608C4CE31D /* PassArchive/ArchiveStore.swift */; };
+		1CE9DA91768139184DBB26F3 /* PassArchive/catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = CC0B6E578262E8354FF2C5D9 /* PassArchive/catalog.json */; };
+		27518C4B0483547535EA8F38 /* PassArchive/RecordViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793D8980829F2DFA7017D7DD /* PassArchive/RecordViews.swift */; };
+		29A220DDE81458AC85BA489B /* PassArchive/ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858955FC9D651D393F9AE1F7 /* PassArchive/ContentView.swift */; };
+		37904ED8430E96F6A0716712 /* PassArchive/AccountAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0DC65D1FC37FA46BC81DA6 /* PassArchive/AccountAPI.swift */; };
+		3AD5E65AD815C53089F7FB86 /* PassArchive/LocalArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E2D441056D7EF076A686E3 /* PassArchive/LocalArchive.swift */; };
+		5D19452EA34B49EF43360D88 /* PassArchive/Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79F963DD28580D050DDB2BC /* PassArchive/Models.swift */; };
+		947FC164876597418DE50FBF /* PassArchive/PassArchiveApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576644ED5444DF5C255240CD /* PassArchive/PassArchiveApp.swift */; };
+		A41D3C88845B1C0F910AF761 /* PassArchive/AccountViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6A0B934C519BA595FEFF1F /* PassArchive/AccountViews.swift */; };
+		A43402011D74D5734C7D96ED /* UITests/PassArchiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16847E0FC89339F6F9DE6C7 /* UITests/PassArchiveUITests.swift */; };
+		B9FE759BFE1B6F185B429A8B /* PassArchive/ArchiveRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593CE4DBF6BD245C2821A082 /* PassArchive/ArchiveRules.swift */; };
+		E9A758DF12014BEAB2966FDB /* PassArchive/ArchiveMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0CCB96E73921E26CA415349 /* PassArchive/ArchiveMerge.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7DFA1C01224F79EDEC26861C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E8A3AD980EC179856012B7E;
+			remoteInfo = PassArchive;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2E0DC65D1FC37FA46BC81DA6 /* PassArchive/AccountAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/AccountAPI.swift; sourceTree = "<group>"; };
+		2E635C1267B14E15F71F5D1A /* PassArchiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = PassArchiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		38A007151ABE87CC01A5B6E9 /* PassArchive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = PassArchive.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		576644ED5444DF5C255240CD /* PassArchive/PassArchiveApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/PassArchiveApp.swift; sourceTree = "<group>"; };
+		593CE4DBF6BD245C2821A082 /* PassArchive/ArchiveRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/ArchiveRules.swift; sourceTree = "<group>"; };
+		71B8C92BFD158A608C4CE31D /* PassArchive/ArchiveStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/ArchiveStore.swift; sourceTree = "<group>"; };
+		76E2D441056D7EF076A686E3 /* PassArchive/LocalArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/LocalArchive.swift; sourceTree = "<group>"; };
+		793D8980829F2DFA7017D7DD /* PassArchive/RecordViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/RecordViews.swift; sourceTree = "<group>"; };
+		858955FC9D651D393F9AE1F7 /* PassArchive/ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/ContentView.swift; sourceTree = "<group>"; };
+		A16847E0FC89339F6F9DE6C7 /* UITests/PassArchiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests/PassArchiveUITests.swift; sourceTree = "<group>"; };
+		AF6A0B934C519BA595FEFF1F /* PassArchive/AccountViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/AccountViews.swift; sourceTree = "<group>"; };
+		C79F963DD28580D050DDB2BC /* PassArchive/Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/Models.swift; sourceTree = "<group>"; };
+		CC0B6E578262E8354FF2C5D9 /* PassArchive/catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PassArchive/catalog.json; sourceTree = "<group>"; };
+		F0CCB96E73921E26CA415349 /* PassArchive/ArchiveMerge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassArchive/ArchiveMerge.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7561BFB015D8F536760CB671 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B28B7AF69320201D1CF206EB = {
+			isa = PBXGroup;
+			children = (
+				2E0DC65D1FC37FA46BC81DA6 /* PassArchive/AccountAPI.swift */,
+				AF6A0B934C519BA595FEFF1F /* PassArchive/AccountViews.swift */,
+				F0CCB96E73921E26CA415349 /* PassArchive/ArchiveMerge.swift */,
+				593CE4DBF6BD245C2821A082 /* PassArchive/ArchiveRules.swift */,
+				71B8C92BFD158A608C4CE31D /* PassArchive/ArchiveStore.swift */,
+				858955FC9D651D393F9AE1F7 /* PassArchive/ContentView.swift */,
+				76E2D441056D7EF076A686E3 /* PassArchive/LocalArchive.swift */,
+				C79F963DD28580D050DDB2BC /* PassArchive/Models.swift */,
+				576644ED5444DF5C255240CD /* PassArchive/PassArchiveApp.swift */,
+				793D8980829F2DFA7017D7DD /* PassArchive/RecordViews.swift */,
+				CC0B6E578262E8354FF2C5D9 /* PassArchive/catalog.json */,
+				A16847E0FC89339F6F9DE6C7 /* UITests/PassArchiveUITests.swift */,
+				FBDC4F23F93125BBEEAE800C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FBDC4F23F93125BBEEAE800C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38A007151ABE87CC01A5B6E9 /* PassArchive.app */,
+				2E635C1267B14E15F71F5D1A /* PassArchiveUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0E8A3AD980EC179856012B7E /* PassArchive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C57128001CE614BF8549D6BB /* Build configuration list for PBXNativeTarget "PassArchive" */;
+			buildPhases = (
+				BCE16DD0260827ECF338C787 /* Sources */,
+				7561BFB015D8F536760CB671 /* Frameworks */,
+				0189424A5A60FED329FA868E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PassArchive;
+			productName = PassArchive;
+			productReference = 38A007151ABE87CC01A5B6E9 /* PassArchive.app */;
+			productType = "com.apple.product-type.application";
+		};
+		95F9FC6E252E44B94B26FF0C /* PassArchiveUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1984331FEF83049637531EF /* Build configuration list for PBXNativeTarget "PassArchiveUITests" */;
+			buildPhases = (
+				55C2A1145FF0806565865D92 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F2911E6CDEAA0FE13B12A6A4 /* PBXTargetDependency */,
+			);
+			name = PassArchiveUITests;
+			productName = PassArchiveUITests;
+			productReference = 2E635C1267B14E15F71F5D1A /* PassArchiveUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		98F54143AB4E86B28C3AFEE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					95F9FC6E252E44B94B26FF0C = {
+						TestTargetID = 0E8A3AD980EC179856012B7E;
+					};
+				};
+			};
+			buildConfigurationList = 862894B703A6DEDF96A9DD6C /* Build configuration list for PBXProject "PassArchive" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = B28B7AF69320201D1CF206EB;
+			productRefGroup = FBDC4F23F93125BBEEAE800C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0E8A3AD980EC179856012B7E /* PassArchive */,
+				95F9FC6E252E44B94B26FF0C /* PassArchiveUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0189424A5A60FED329FA868E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CE9DA91768139184DBB26F3 /* PassArchive/catalog.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		55C2A1145FF0806565865D92 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A43402011D74D5734C7D96ED /* UITests/PassArchiveUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCE16DD0260827ECF338C787 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37904ED8430E96F6A0716712 /* PassArchive/AccountAPI.swift in Sources */,
+				A41D3C88845B1C0F910AF761 /* PassArchive/AccountViews.swift in Sources */,
+				E9A758DF12014BEAB2966FDB /* PassArchive/ArchiveMerge.swift in Sources */,
+				B9FE759BFE1B6F185B429A8B /* PassArchive/ArchiveRules.swift in Sources */,
+				13C2D55AAB007E7A032F7A9C /* PassArchive/ArchiveStore.swift in Sources */,
+				29A220DDE81458AC85BA489B /* PassArchive/ContentView.swift in Sources */,
+				3AD5E65AD815C53089F7FB86 /* PassArchive/LocalArchive.swift in Sources */,
+				5D19452EA34B49EF43360D88 /* PassArchive/Models.swift in Sources */,
+				947FC164876597418DE50FBF /* PassArchive/PassArchiveApp.swift in Sources */,
+				27518C4B0483547535EA8F38 /* PassArchive/RecordViews.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F2911E6CDEAA0FE13B12A6A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0E8A3AD980EC179856012B7E /* PassArchive */;
+			targetProxy = 7DFA1C01224F79EDEC26861C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		003254340176A76C2BC8F6D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
+				PRODUCT_BUNDLE_IDENTIFIER = win.yukkuri.arknights.passarchive.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PassArchive;
+			};
+			name = Release;
+		};
+		59CE1A55E3C0DC7EDB1A684D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
+				PRODUCT_BUNDLE_IDENTIFIER = win.yukkuri.arknights.passarchive.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PassArchive;
+			};
+			name = Debug;
+		};
+		639A7CA24D39909E713B47F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "通行认证档案";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = win.yukkuri.arknights.passarchive;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7082CC0B6FC1282FCEABD07A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "通行认证档案";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = win.yukkuri.arknights.passarchive;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		89E1FD6268CC0F221A2BE178 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E6DE6C99132752C914FEF632 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		862894B703A6DEDF96A9DD6C /* Build configuration list for PBXProject "PassArchive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89E1FD6268CC0F221A2BE178 /* Debug */,
+				E6DE6C99132752C914FEF632 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C57128001CE614BF8549D6BB /* Build configuration list for PBXNativeTarget "PassArchive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7082CC0B6FC1282FCEABD07A /* Debug */,
+				639A7CA24D39909E713B47F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1984331FEF83049637531EF /* Build configuration list for PBXNativeTarget "PassArchiveUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59CE1A55E3C0DC7EDB1A684D /* Debug */,
+				003254340176A76C2BC8F6D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+}

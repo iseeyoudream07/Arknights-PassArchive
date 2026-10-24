@@ -1,3 +1,8 @@
+/*
+ * 模块导读：壁纸边缘留白与桌面区域适配样式。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 /* Additional UI margins. Negative values intentionally extend the HUD frame.
    The renderer, game targets and model-attached inspection marks stay full size. */
 #stage {

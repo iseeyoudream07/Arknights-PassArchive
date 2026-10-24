@@ -1,3 +1,8 @@
+/*
+ * 模块导读：终端深浅主题颜色变量与主题相关视觉规则。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 .theme-settings { padding: 16px 0; border-bottom: 1px solid #bdb8ad; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .theme-settings strong { display: block; font-size: 14px; }
 .theme-settings span { display: block; margin-top: 6px; font-size: 12px; color: #77756d; }

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：透明模型内部光学着色与材质配置；修改时需检查 WebGL 着色器编译。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 
 const surfaces: Record<

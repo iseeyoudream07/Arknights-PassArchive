@@ -1,3 +1,8 @@
+/*
+ * 模块导读：二维开屏的画面渲染器 BootSequence；时间推进由外层启动控制器负责。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { bootMotion } from "./boot-motion.ts";
 import { bootMarkContour } from "./brand.ts";
 import { themeAmount } from "./theme-ui.ts";
@@ -11,6 +16,7 @@ const arc = (r: number, start: number, sweep: number, x = 960, y = 540) => {
   return `M${point(start)}A${r},${r} 0 ${sweep > Math.PI ? 1 : 0} 1 ${point(start + sweep)}`;
 };
 
+/** 开屏渲染器：根据外部传入时间更新文字、标志与扫描画面。 */
 export class BootSequence {
   private nodes: Map<string, HTMLElement> = new Map();
   private contour: SVGPathElement;
@@ -27,6 +33,7 @@ export class BootSequence {
   private poweredHTML: string;
   private accessLettering: BootLettering;
   private authLettering: BootLettering;
+  /** 缓存开屏节点、字形和身份读取函数，避免重播时重复构造。 */
   constructor(private stage: HTMLElement, private identity:()=>string = ()=>'DOCTOR') {
     [
       ".access-text",
@@ -126,6 +133,7 @@ export class BootSequence {
   private opacity(selector: string, value: number | boolean) {
     this.el(selector).style.opacity = String(Number(value));
   }
+  /** 采样指定时间的画面状态；时间由外部动画循环驱动，单位为秒。 */
   update(time: number) {
     const s = bootMotion(time,this.identity()),
       t = s.t;
@@ -194,6 +202,7 @@ export class BootSequence {
       `translate(${Math.sin(t * 0.16) * 18}px, ${-(t - 6) * 5}px) scale(1.08)`;
     return s;
   }
+  /** 把扫描阶段状态写入线条、圆环和提示节点。 */
   private renderScan(s: ReturnType<typeof bootMotion>) {
     const { scan } = s,
       r = scan.radius;
@@ -262,6 +271,7 @@ export class BootSequence {
     this.el(".scan > span").style.setProperty("--boot-phrase-tracking", `${s.scanTracking}px`);
     this.el(".scan > span").style.fontSize = `${s.scanFont}px`;
   }
+  /** 将开屏渲染状态恢复到可重新播放的起点。 */
   reset() {
     // Restore shared corner branding when skipping at any intermediate frame.
     [".brand", ".powered"].forEach((key) =>

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：使用滚动数字组件显示时钟，负责时间文本和更新接口。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { createRollingNumber } from "@kitlangton/rolling-number";
 
 export function createRollingClock(element: HTMLElement) {

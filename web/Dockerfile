@@ -1,3 +1,6 @@
+# Web 多阶段镜像：runtime 定义运行环境，prebuilt 复用静态产物，web 从锁定依赖构建。
+
+# 以非 root 用户运行 Nginx，监听容器内 8080 端口。
 FROM nginx:stable-alpine@sha256:ed84151ed2d47ef93c0939eb9b9754c6990db6092cd2081e11988a47a83d47ea AS runtime
 COPY containers/nginx.conf /etc/nginx/nginx.conf
 USER 101:101
@@ -8,10 +11,12 @@ HEALTHCHECK --interval=15s --timeout=5s --start-period=5s --retries=4 \
   CMD wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1
 
 # Reuse a verified local/CI build on a small VPS: --target prebuilt.
+# 使用现有 dist/；需先完成本地或 CI 构建与验证。
 FROM runtime AS prebuilt
 COPY dist/ /usr/share/nginx/html/
 
 # The default image builds the frontend from the locked source dependencies.
+# 构建阶段安装锁定依赖并生成 dist/，不会把 node_modules 放进运行镜像。
 FROM node:22-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 AS build
 WORKDIR /app
 COPY package.json package-lock.json ./

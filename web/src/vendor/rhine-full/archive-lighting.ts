@@ -1,3 +1,8 @@
+/*
+ * 模块导读：为档案阵列和独立查看器创建一致的环境照明；各渲染器需独立的 PMREM 资源。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 

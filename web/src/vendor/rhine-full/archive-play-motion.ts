@@ -1,3 +1,8 @@
+/*
+ * 模块导读：音频频段包络、节奏位移和接力小游戏状态；通过纯计算驱动场景变化。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 const clamp = (value: number, low = 0, high = 1) => Math.min(high, Math.max(low, value));
 export type MusicBands = { low: number; mid: number; high: number; activity: number };
 export const quietBands = (): MusicBands => ({ low: 0, mid: 0, high: 0, activity: 0 });

@@ -1,6 +1,6 @@
 # Arknights PassArchive · 通行认证档案
 
-《明日方舟》《明日方舟：终末地》实体通行认证的查询、收藏与购买记录工具。Web 使用 RhineLabUI 三维终端与二维目录，Django 提供共享 API 和 PostgreSQL 账号存档，iOS 提供原生 SwiftUI 起点。
+《明日方舟》《明日方舟：终末地》实体通行认证的查询、收藏与购买记录工具。Web 使用 RhineLabUI 三维终端与二维目录，Django 提供共享 API 和 PostgreSQL 账号存档，iOS 使用 SwiftUI 与 SwiftData，登录后共享 Web 账号存档。
 
 [在线使用](https://arknights.yukkuri.win/) · [下载 Release](https://github.com/iseeyoudream07/Arknights-PassArchive/releases/latest) · [PyCharm 开发](docs/pycharm.md) · [部署文档](docs/deployment-guide.md) · [API](docs/api.md) · [第三方授权](THIRD_PARTY_NOTICES.md)
 
@@ -14,7 +14,7 @@
 | 同步 | IndexedDB 先保存；联网后合并；不同条目自动合并，同一条冲突由用户选择；访客与账号独立 |
 | 备份 | JSON 导入导出、兼容原收集册格式、保留未匹配条目和导入前恢复点 |
 | Web | 开屏、三维档案阵列、抽取解密、模型查看器、二维管理、深浅主题、移动端与离线缓存 |
-| iOS | SwiftUI 目录、搜索、系列详情、拥有状态与 SwiftData 本机保存；价格编辑、备份、账号与同步尚未接入 |
+| iOS | 原生目录与筛选、关注系列、市场价和多笔购买记录、统计、新旧 JSON 备份、注册登录和密码管理、离线编辑与 Web 云端同步 |
 
 精一、精二分别记录；价格由用户填写。账号当前使用用户名和密码，没有邮箱找回流程。离线访问需要事先加载过相应页面与资源。
 
@@ -46,6 +46,8 @@ npm run dev
 ## 在 PyCharm 中编辑
 
 用 **File → Open** 打开项目根目录，选择 `.venv` 的 Python 解释器，依次运行 **01 初始化开发环境**、**02 运行整站**，再打开 <http://127.0.0.1:5173/>。还提供后端断点调试、前端独立热更新和本地检查配置，详见 [PyCharm 开发说明](docs/pycharm.md)。
+
+源码提供中文模块导读、函数说明和关键规则注释；前端长函数与样式已展开。阅读顺序、保存/同步调用链和建议断点见 [中文代码导读与断点调试](docs/code-guide-zh.md)。
 
 终端也可使用统一入口：
 
@@ -82,17 +84,25 @@ python3 tools/build_release.py
 
 输出在 `artifacts/releases/v版本/`。发布工具只打包 Git 跟踪的源码和本次构建的静态文件，不打包数据库、密钥、原始上传、部署现场记录或本机依赖。
 
-## iOS 原生起点
+Web 提供仅 `root` 管理员可见的通行证新增与详情编辑后台，含系列资料管理及默认关闭的外部数据源 API。首次启用、权限和接口约定见 [Web 管理后台](docs/admin.md)。iOS 暂不增加此功能。
+
+## iOS 原生客户端
 
 使用 Xcode 打开 `ios/PassArchive.xcodeproj`，选择 PassArchive 和 iPhone 模拟器运行。最低 iOS 17，无第三方 Swift 包。真机安装需选择自己的开发团队；本 Release 不含签名 IPA。
 
-`ios/PassArchive/ArchiveStore.swift` 配置目录 API 地址。首次离线目录随 App 提供，图片在线获取。iOS 收藏当前独立保存在 SwiftData，不会自动同步 Web。
+默认连接共享 API。首次离线目录随 App 提供，图片在线获取。访客收藏保存在 SwiftData，登录后先读取该账号的云端存档；需要时在“我的”主动合并访客收藏。旧版 iOS 的拥有状态会迁移到访客存档。价格、数量、关注和备份格式与 Web 一致，同项冲突需要用户选择。
+
+原生提供“目录 / 收藏 / 统计 / 我的”四个标签页；三维终端、解密动效和模型查看器通过“我的 → 打开网页版”访问。构建、隔离联调和验收见 [iOS 开发说明](docs/ios.md)。 最新中文文案与安全修复见 [2026-10-16 复查记录](docs/ux-security-review-20261016.md)。
 
 ```bash
 xcodebuild -project ios/PassArchive.xcodeproj -scheme PassArchive \
   -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath ios/build CODE_SIGNING_ALLOWED=NO build
 ```
+
+<img src="docs/images/ios-catalog.png" alt="iOS 原生目录" width="280"> <img src="docs/images/ios-statistics.png" alt="iOS 收藏统计" width="280">
+
+[iOS 首版验收记录](docs/ios-verification.md)
 
 ## 检查
 
@@ -111,7 +121,7 @@ npm test
 ```text
 backend/      Django API、会话认证、PostgreSQL 存档和统计规则
 web/          三维终端、二维收藏管理、IndexedDB 与离线缓存
-ios/          SwiftUI 工程与 SwiftData 本机存档
+ios/          SwiftUI、SwiftData、共享 API 客户端和同步测试
 data/         标准化目录和旧版映射
 shared/       上游统计验证样例
 tools/        数据构建、验证、工程生成和 Release 打包

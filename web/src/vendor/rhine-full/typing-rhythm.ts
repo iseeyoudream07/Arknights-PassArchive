@@ -1,3 +1,8 @@
+/*
+ * 模块导读：开屏逐字声音的参考帧节奏，判断帧区间内是否应触发提示音。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { bootMotion } from "./boot-motion.ts";
 
 // Use the actual 25 fps text reveal, including the first character of each field.

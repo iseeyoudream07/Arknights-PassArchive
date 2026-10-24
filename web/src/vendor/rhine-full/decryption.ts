@@ -1,3 +1,8 @@
+/*
+ * 模块导读：三维解密阶段的时间采样和扫描状态控制，供模型材质与镜头使用。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 // Measured against the local reference at 25 fps. Times here are ORIGINAL video
 // seconds, unlike the camera's historical (original minus five) time convention.
 export const DECRYPTION_START = 34.12;

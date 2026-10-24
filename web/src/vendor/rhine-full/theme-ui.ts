@@ -1,3 +1,8 @@
+/*
+ * 模块导读：界面主题参数与 CSS 变量着色，供二维登录页和三维终端共用。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import "./theme.css";
 const palette = {
   ink: ["#080a08", "#e0e3dc"], muted: ["#77756d", "#a6b0b1"], line: ["#aaa59a", "#536166"],
@@ -20,5 +25,5 @@ export function paintTheme(amount: number) {
   }
 }
 export function themeSettingsMarkup(dark: boolean) {
-  return `<div class="theme-settings"><div><strong>界面配色</strong><span>玻璃阵列随配色逐张过渡</span></div><div class="theme-choices" role="group" aria-label="界面配色"><button data-color-theme="light" aria-pressed="${!dark}">亮色</button><button data-color-theme="dark" aria-pressed="${dark}">暗色</button></div></div>`;
+  return `<div class="theme-settings"><div><strong>外观</strong><span>切换页面和三维模型的明暗外观</span></div><div class="theme-choices" role="group" aria-label="外观"><button data-color-theme="light" aria-pressed="${!dark}">浅色</button><button data-color-theme="dark" aria-pressed="${dark}">深色</button></div></div>`;
 }

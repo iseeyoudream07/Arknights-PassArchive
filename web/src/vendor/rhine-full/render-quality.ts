@@ -1,3 +1,8 @@
+/*
+ * 模块导读：画质参数、预设和渲染尺寸计算；规范化外部输入后再交给渲染器。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 /** Rendering controls are independent of lighting, materials and animation. */
 export type RenderQuality = {
   scale: number;
@@ -59,10 +64,10 @@ export const qualityPresets = {
 } as const satisfies Record<string, RenderQuality>;
 export type QualityPreset = keyof typeof qualityPresets;
 export const presetLabels: Record<QualityPreset, string> = {
-  performance: "性能",
-  original: "原始",
-  high: "高",
-  ultra: "极高",
+  performance: "流畅",
+  original: "标准",
+  high: "高清",
+  ultra: "超清",
 };
 
 const member = <T>(value: unknown, choices: readonly T[], fallback: T): T =>

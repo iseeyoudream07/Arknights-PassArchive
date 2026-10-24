@@ -1,3 +1,8 @@
+/*
+ * 模块导读：档案阵列波浪、抽取、回落和空闲位移的数学函数。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 // Times are seconds from the reference video's 05:00 frame (25 fps).
 export const smooth = (t: number) => {
   t = Math.max(0, Math.min(1, t));

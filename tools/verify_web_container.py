@@ -1,3 +1,6 @@
+# 验收已运行的 Web 容器：静态资源、缓存清单、响应头和路由回退。
+# 需要先启动待验收容器；本工具不负责创建或发布容器。
+
 """Check an isolated frontend container against a verified dist directory."""
 import argparse
 import hashlib
@@ -8,6 +11,7 @@ from urllib.parse import quote, urlparse
 from urllib.request import urlopen
 
 
+# 读取本地构建清单并逐项比对容器响应，核对静态资源与页面回退行为。
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--url', default='http://127.0.0.1:18083')
@@ -16,7 +20,7 @@ def main():
     assert urlparse(args.url).hostname in {'127.0.0.1', 'localhost', '::1'}, 'Use an isolated loopback endpoint.'
     base = args.url.rstrip('/')
     manifest = json.loads((args.dist / 'app-cache.json').read_text())
-    paths = {'index.html', 'terminal.html', 'login.html', 'credits.html', 'sw.js',
+    paths = {'index.html', 'terminal.html', 'login.html', 'credits.html', 'admin.html', 'sw.js',
              'app-cache.json', 'LICENSE', 'THIRD_PARTY_NOTICES.md',
              'licenses/CC-BY-NC-4.0.txt'}
     paths.update(p.lstrip('/') for p in manifest['resources'])

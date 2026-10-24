@@ -1,3 +1,8 @@
+/* 独立开屏 BootSequence 渲染器，由 web/src/opening.ts 驱动。
+ * 此目录为独立开屏参考子集；整站三维终端使用 vendor/rhine-full。
+ * 保留原有版权和来源声明；项目阅读路线见 docs/code-guide-zh.md。
+ */
+
 import { bootMotion } from "./boot-motion.ts";
 import { bootMarkContour } from "./brand.ts";
 import { themeAmount } from "./theme-ui.ts";

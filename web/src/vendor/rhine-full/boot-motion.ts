@@ -1,3 +1,8 @@
+/*
+ * 模块导读：开屏各阶段的时间进度和缓动采样；调速需一起检查对应轨迹。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 // Original footage is 25 fps. App time zero corresponds to video time 5 s.
 // Discrete editorial cuts use frame numbers; spatial motion uses continuous time.
 import { brandTrack, companyTrack, scanTrack, track } from "./boot-tracks.ts";

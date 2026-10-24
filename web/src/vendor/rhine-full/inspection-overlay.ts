@@ -1,3 +1,8 @@
+/*
+ * 模块导读：模型检查视图的标线和标注覆盖层。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import {
   SCAN_FROM,
   SCAN_TO,

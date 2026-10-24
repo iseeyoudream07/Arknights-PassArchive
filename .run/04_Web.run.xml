@@ -1,3 +1,4 @@
+<!-- 前端热更新：与 03 的后端调试组合使用；/api 经 Vite 代理到 8000 端口。 -->
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="04 Web 热更新" type="PythonConfigurationType" factoryName="Python">
     <module name="Arknights-PassArchive" />

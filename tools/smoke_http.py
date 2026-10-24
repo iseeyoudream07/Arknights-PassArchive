@@ -1,3 +1,6 @@
+# 对指定站点进行 HTTP 验收：目录一致性、图片、统计、备份转换及响应头。
+# 默认目标是线上站点，执行会发送请求并写入验收报告；本机代码注释检查无需运行。
+
 """Read-only public acceptance plus synthetic stateless API requests."""
 import argparse
 import json
@@ -15,6 +18,7 @@ args = p.parse_args()
 tls_context = ssl.create_default_context(cafile=args.cafile)
 root = Path(__file__).resolve().parent.parent
 results = []
+# 发送 GET 或带 JSON 的 POST，核对预期状态并保存检查摘要，返回正文与响应头。
 def request(path, payload=None, expected=200):
     data = json.dumps(payload).encode() if payload is not None else None
     headers = {'Content-Type': 'application/json'} if data is not None else {}

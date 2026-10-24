@@ -1,3 +1,8 @@
+/*
+ * 模块导读：启动前门禁和初始提示界面的样式。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 #viewport > .loading { position: fixed; }
 .entry-controls { display: flex; align-items: center; flex-direction: column; margin-top: 32px; max-width: calc(100vw - 40px); text-align: center; }
 .entry-start { min-height: 48px; padding: 8px 24px; border-block: 1px solid #969183; font-size: 16px; letter-spacing: 2px; }

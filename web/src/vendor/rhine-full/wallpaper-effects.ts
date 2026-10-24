@@ -1,3 +1,8 @@
+/*
+ * 模块导读：壁纸效果选项、边距计算与效果管理。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { wallpaperHost, type WallpaperProperties } from "./wallpaper.ts";
 import type { ArchiveScene } from "./scene.ts";
 import { HudProjection } from "./hud-projection.ts";

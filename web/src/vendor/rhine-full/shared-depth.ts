@@ -1,3 +1,8 @@
+/*
+ * 模块导读：复用深度信息实现环境遮蔽和景深，避免多份深度采样不一致。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from 'three';
 import { SSAOPass } from 'three/addons/postprocessing/SSAOPass.js';
 import { BokehPass, type BokehPassParameters } from 'three/addons/postprocessing/BokehPass.js';

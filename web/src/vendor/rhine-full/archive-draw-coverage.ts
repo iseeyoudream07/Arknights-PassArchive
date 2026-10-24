@@ -1,3 +1,8 @@
+/*
+ * 模块导读：分别计算可见绘制区域与阴影实例覆盖，减少多渲染通道重复处理。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 import { InstanceUpdates } from "./instance-updates.ts";
 

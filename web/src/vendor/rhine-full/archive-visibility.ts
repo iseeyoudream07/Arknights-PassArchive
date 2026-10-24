@@ -1,3 +1,8 @@
+/*
+ * 模块导读：按相机视锥和阵列高度范围计算可见网格，缓存实例池所需单元。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from 'three';
 import { COLUMN_SPACING, ROW_SPACING, type ArchiveCell } from './archive-loop.ts';
 

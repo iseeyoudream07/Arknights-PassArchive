@@ -1,3 +1,8 @@
+/*
+ * 模块导读：玻璃档案卡片的材质与深浅主题过渡；在同一网格上插值表面参数，避免透明层重叠。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 import { glassRevealGLSL, frostedTransmissionGLSL, FROSTED_ROUGHNESS } from "./glass-reveal.ts";
 import { internalOpticsFragment } from "./internal-optics.ts";

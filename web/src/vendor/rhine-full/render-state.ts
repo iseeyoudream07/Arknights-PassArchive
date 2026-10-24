@@ -1,3 +1,8 @@
+/*
+ * 模块导读：比较逐帧渲染输入是否变化，避免状态相同时重复绘制；不改变动画自身状态。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 /** Exact state comparison. This never changes or snaps the animation state. */
 export class RenderState {
   private values: (number | string | undefined)[] = [];

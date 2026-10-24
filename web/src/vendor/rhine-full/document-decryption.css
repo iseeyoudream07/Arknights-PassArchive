@@ -1,3 +1,8 @@
+/*
+ * 模块导读：文档解密遮罩、文字层及显现效果样式。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 .document-redacted {
   position: relative;
 }

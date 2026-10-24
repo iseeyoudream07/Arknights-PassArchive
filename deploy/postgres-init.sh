@@ -1,4 +1,7 @@
 #!/bin/sh
+# 仅在项目全新的空 PostgreSQL 数据卷初始化时运行。
+# 读取挂载的应用密码，创建权限受限的 pass_app 角色；不要在日常调试中手动运行。
+
 # Run only during initialization of the project's new, empty PostgreSQL volume.
 set -eu
 app_password=$(cat /run/secrets/postgres_app_password)

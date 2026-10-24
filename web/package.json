@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build && node scripts/build-cache-manifest.mjs",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node --import ./tests/register-typescript.mjs --test tests/core.test.ts tests/opening.test.ts tests/rhine.test.ts tests/sw.test.mjs tests/sync.test.ts tests/account-sync.test.ts tests/list-ui.test.ts tests/archive-writes.test.ts",
+    "test": "node --import ./tests/register-typescript.mjs --test tests/core.test.ts tests/admin.test.ts tests/opening.test.ts tests/rhine.test.ts tests/sw.test.mjs tests/sync.test.ts tests/account-sync.test.ts tests/account-messages.test.ts tests/list-ui.test.ts tests/archive-writes.test.ts",
     "predev": "node scripts/patch-rolling-number.mjs",
     "prebuild": "node scripts/patch-rolling-number.mjs"
   },

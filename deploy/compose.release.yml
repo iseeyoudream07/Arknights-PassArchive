@@ -1,8 +1,13 @@
+# 正式部署组合：Web 静态服务、Django API 和 PostgreSQL。
+# 本机 PyCharm 调试使用 .run/ 配置，此文件仅在 Docker 部署时使用。
+
 services:
+  # 复用 compose.web.yml 的前端服务定义。
   web:
     extends:
       file: compose.web.yml
       service: web
+  # 账号数据库使用持久卷；初始化脚本仅在新建空数据卷时运行。
   postgres:
     image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
     restart: unless-stopped
@@ -28,6 +33,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 6
+  # 账号 API 仅映射到本机端口，由外层 HTTPS 入口转发。
   api:
     build:
       context: ..
@@ -63,6 +69,7 @@ services:
       timeout: 8s
       retries: 4
       start_period: 15s
+# 从部署机指定路径挂载密钥文件；仓库只保存路径模板。
 secrets:
   django_secret_key:
     file: ${PASSARCHIVE_SECRET_DIR:-/srv/passarchive/secrets}/django-secret-key
@@ -72,6 +79,7 @@ secrets:
     file: ${PASSARCHIVE_SECRET_DIR:-/srv/passarchive/secrets}/postgres-app-password
 volumes:
   account_database: {}
+# accounts 为容器内部数据库网络，web 用于 API 的外部通信。
 networks:
   accounts:
     internal: true

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：根据视口计算开屏和阵列的取景、缩放与布局参数。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 /** Reference coordinates remain exact during the film and at 1920 × 1080. */
 export function openingLayout(width: number, height: number) {
   width = Math.max(1, width); height = Math.max(1, height);

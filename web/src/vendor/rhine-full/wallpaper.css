@@ -1,3 +1,8 @@
+/*
+ * 模块导读：壁纸宿主运行模式的基础样式覆盖。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 /* Avoid native select rendering in Wallpaper Engine's off-screen CEF. */
 .quality-cycle {
   display: inline-flex;

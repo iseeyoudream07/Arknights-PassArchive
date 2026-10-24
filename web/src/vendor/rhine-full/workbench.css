@@ -1,3 +1,8 @@
+/*
+ * 模块导读：工作台时钟、计时器、状态区域和设置布局样式。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 .workbench { position: absolute; inset: 0; z-index: 5; pointer-events: none; color: #080a08; }
 .workbench[hidden] { display: none; }
 .workbench [hidden] { display: none !important; }

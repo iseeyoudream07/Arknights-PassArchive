@@ -1,3 +1,8 @@
+/*
+ * 模块导读：控制用户进入终端的启动门禁和过渡，衔接声音解锁与开屏。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 type EntryOptions = {
   root: HTMLElement;
   unlock: () => Promise<boolean>;

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：无限阵列的逻辑网格、循环索引、相邻导航与实例池坐标转换。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { archiveColumns, columnFiles, fileLocation } from "./data.ts";
 
 export type ArchiveCell = { lane: number; row: number };

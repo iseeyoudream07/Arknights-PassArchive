@@ -1,9 +1,50 @@
-#stage .credits-intro {font-size:13px;color:var(--theme-muted,#77756d);margin:15px 0 28px;letter-spacing:.12em;}
-#stage .credits-sections section {border-top:1px solid var(--theme-line,#aaa59a);padding:24px 0;}
-#stage .credits-index {display:block;font-size:10px;line-height:1.8;letter-spacing:.12em;color:var(--theme-muted,#77756d);}
-#stage .credits-sections h3 {font-size:19px;margin:10px 0 12px;font-weight:550;}
-#stage .credits-sections p {font-size:13px;line-height:1.9;color:var(--theme-muted,#77756d);margin:9px 0;overflow-wrap:anywhere;}
-#stage .credits-links {display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:15px;}
-#stage .credits-links a {font-size:12px;line-height:2;border-bottom:1px solid var(--theme-line,#aaa59a);color:var(--theme-ink,#080a08);text-decoration:none;}
-#stage .credits-links a:hover {border-color:currentColor;}
-#stage .credits-links a:focus-visible {outline:2px solid var(--theme-accent,#9b7247);outline-offset:5px;}
+/* 终端来源与许可内容的分节、索引和链接样式，独立致谢页也会复用。 */
+#stage .credits-intro {
+  font-size: 13px;
+  color: var(--theme-muted,#77756d);
+  margin: 15px 0 28px;
+  letter-spacing: .12em;
+}
+#stage .credits-sections section {
+  border-top: 1px solid var(--theme-line,#aaa59a);
+  padding: 24px 0;
+}
+#stage .credits-index {
+  display: block;
+  font-size: 10px;
+  line-height: 1.8;
+  letter-spacing: .12em;
+  color: var(--theme-muted,#77756d);
+}
+#stage .credits-sections h3 {
+  font-size: 19px;
+  margin: 10px 0 12px;
+  font-weight: 550;
+}
+#stage .credits-sections p {
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--theme-muted,#77756d);
+  margin: 9px 0;
+  overflow-wrap: anywhere;
+}
+#stage .credits-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 15px;
+}
+#stage .credits-links a {
+  font-size: 12px;
+  line-height: 2;
+  border-bottom: 1px solid var(--theme-line,#aaa59a);
+  color: var(--theme-ink,#080a08);
+  text-decoration: none;
+}
+#stage .credits-links a:hover {
+  border-color: currentColor;
+}
+#stage .credits-links a:focus-visible {
+  outline: 2px solid var(--theme-accent,#9b7247);
+  outline-offset: 5px;
+}

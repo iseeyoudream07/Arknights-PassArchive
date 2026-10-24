@@ -1,3 +1,8 @@
+/*
+ * 模块导读：遍历 Three.js 对象树，释放几何体、材质及纹理等 GPU 资源。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 
 /** Dispose shared resources once before dropping the scene's JS references. */

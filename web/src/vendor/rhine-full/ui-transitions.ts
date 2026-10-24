@@ -1,3 +1,8 @@
+/*
+ * 模块导读：可复用的表面与内容显隐过渡，包含取消旧过渡和立即完成路径。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 const enterEase = "cubic-bezier(0.22, 1, 0.36, 1)";
 const exitEase = "cubic-bezier(0.4, 0, 1, 1)";
 

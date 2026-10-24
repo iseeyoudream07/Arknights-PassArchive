@@ -1,3 +1,8 @@
+/*
+ * 模块导读：画质设置面板、预设按钮和自定义参数布局。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 .settings-modal {
   width: 1080px;
   height: auto;

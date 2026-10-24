@@ -1,7 +1,12 @@
+/*
+ * 三维终端和独立致谢页共用的来源、授权与数据说明 HTML。
+ */
 import './terminal-credits.css';
-
+/**
+ * 返回来源、许可及数据存储说明，独立页面和三维终端复用同一内容。
+ */
 export function terminalCreditsMarkup() {
-  return `<h2>SOURCES &amp; LICENSES<small>来源、许可与致谢</small></h2>
+    return `<h2>SOURCES &amp; LICENSES<small>来源、许可与致谢</small></h2>
   <p class="credits-intro">PASS ARCHIVE · 通行认证收藏档案</p>
   <div class="credits-sections">
     <section><span class="credits-index">01 / COLLECTION DATA</span><h3>目录与统计规则</h3><p>主体目录、精一与精二拆分、官方参考价及统计规则来自 SpectMercyRE / Arknights-pass-statistics。固定源提交 1f31daf9edc7c0afb3ddc6744cd5809ca911957f。保留其 MIT 版权声明及原项目非商业使用说明。</p><div class="credits-links"><a href="https://github.com/SpectMercyRE/Arknights-pass-statistics" target="_blank" rel="noopener">原收集册 ↗</a><a href="/licenses/upstream-MIT.txt" target="_blank">MIT 全文 ↗</a><a href="/licenses/upstream-DISCLAIMER.txt" target="_blank">原版权说明 ↗</a></div></section>

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：扫描圆环的参考帧轨迹，包含位置、半径和角度插值。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { track } from "./boot-tracks.ts";
 
 // Source frames 543–568. Angles are unwrapped: the left arc turns clockwise,

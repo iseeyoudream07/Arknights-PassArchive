@@ -1,3 +1,8 @@
+/*
+ * 模块导读：互动模式入口、目标标记、分数和进度提示样式。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 .relay-entry, .relay-hud, .relay-target { position: absolute; z-index: 7; color: #171713; }
 .relay-entry { left: var(--edge); bottom: 9%; padding: 12px 0; border-top: 1px solid #aaa59a; background: transparent; font-size: 13px; letter-spacing: 1px; }
 .relay-entry span { margin-right: 22px; }

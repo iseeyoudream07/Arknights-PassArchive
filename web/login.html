@@ -1,3 +1,65 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#eae5e1"><title>账号登录 · 通行认证档案</title></head>
-<body><div id="stage" class="auth-page"><header class="auth-header"><a href="/">← 返回档案</a><span>PASS ARCHIVE / ACCOUNT ACCESS</span><button id="auth-theme" aria-label="切换深浅主题">LIGHT / DARK ◐</button></header><main class="auth-layout"><section class="auth-intro"><div class="auth-brand">RHINE LAB<small>SYNTHESIZE INFORMATION</small><span>COLLECTION <b>OS</b></span></div><div class="auth-orbit" aria-hidden="true"><i></i><i></i><i></i><b></b><span>RECORD<br>SYNC<br>PRESERVE</span></div><p class="auth-eyebrow">01 / PERSONAL ARCHIVE</p><h1>Rhodes Island Passport</h1><p class="auth-description">记录每一张通行认证，<br>在不同设备间继续你的收藏。</p><div class="auth-record"><span>COLLECTION</span><span>PRICE &amp; PURCHASE</span><span>SAVED SERIES</span></div></section><section class="auth-panel" aria-label="账号访问"><div class="auth-panel-top"><span>ACCESS CONTROL</span><span id="access-state">READY</span></div><div id="auth-content"></div><p class="auth-privacy">登录后可同步收藏、价格、购买记录与关注系列。本机访客存档可由你选择并入账号。</p></section></main><footer class="auth-footer"><span>PASS ARCHIVE / 0.4.5</span><a href="/credits.html">来源与许可 ↗</a><span>COLLECTION · RECORD · PRESERVE</span></footer></div><script type="module" src="/src/login-entry.ts"></script></body></html>
+<!-- 独立登录/注册页面，表单和事件由 src/login-entry.ts 动态生成。 -->
+
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+        <meta name="theme-color" content="#eae5e1">
+        <title>账号登录 · 通行认证档案</title>
+    </head>
+    <body>
+        <div id="stage" class="auth-page">
+            <header class="auth-header">
+                <a href="/">← 返回档案</a>
+                <span>PASS ARCHIVE / ACCOUNT ACCESS</span>
+                <button id="auth-theme" aria-label="切换深浅主题">LIGHT / DARK ◐</button>
+            </header>
+
+            <main class="auth-layout">
+                <section class="auth-intro">
+                    <div class="auth-brand">
+                        RHINE LAB
+                        <small>SYNTHESIZE INFORMATION</small>
+                        <span>COLLECTION <b>OS</b></span>
+                    </div>
+                    <div class="auth-orbit" aria-hidden="true">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <b></b>
+                        <span>RECORD<br>SYNC<br>PRESERVE</span>
+                    </div>
+                    <p class="auth-eyebrow">01 / PERSONAL ARCHIVE</p>
+                    <h1>Rhodes Island Passport</h1>
+                    <p class="auth-description">
+                        记录每一张通行认证，<br>在不同设备间同步你的收藏。
+                    </p>
+                    <div class="auth-record">
+                        <span>COLLECTION</span>
+                        <span>PRICE &amp; PURCHASE</span>
+                        <span>SAVED SERIES</span>
+                    </div>
+                </section>
+
+                <section class="auth-panel" aria-label="账号访问">
+                    <div class="auth-panel-top">
+                        <span>ACCESS CONTROL</span>
+                        <span id="access-state">就绪</span>
+                    </div>
+                    <div id="auth-content"></div>
+                    <p class="auth-privacy">
+                        登录后可同步收藏、价格、购买记录与关注系列。未登录时的收藏，可由你选择合并到账号。
+                    </p>
+                </section>
+            </main>
+
+            <footer class="auth-footer">
+                <span>PASS ARCHIVE / 0.4.5</span>
+                <a href="/credits.html">来源与许可 ↗</a>
+                <span>COLLECTION · RECORD · PRESERVE</span>
+            </footer>
+        </div>
+        <script type="module" src="/src/login-entry.ts"></script>
+    </body>
+</html>

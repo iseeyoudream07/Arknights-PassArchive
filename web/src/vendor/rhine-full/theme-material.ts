@@ -1,3 +1,8 @@
+/*
+ * 模块导读：在深浅主题间插值三维材质与环境参数。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 
 const surfaces: Record<string, string> = {

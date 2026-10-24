@@ -1,10 +1,15 @@
+/*
+ * 模块导读：生成声音设置表单，实际播放和偏好持久化由调用方管理。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import type { AudioPreferences } from "./audio.ts";
 
 export function audioSettingsMarkup(prefs: AudioPreferences) {
   return `<div class="audio-settings">${(
     [
       ["sound", "soundVolume", "INTERFACE SOUND", "操作与启动音效"],
-      ["music", "musicVolume", "BACKGROUND MUSIC", "观测室 · 背景音乐"],
+      ["music", "musicVolume", "BACKGROUND MUSIC", "播放背景音乐"],
     ] as const
   )
     .map(

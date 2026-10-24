@@ -1,3 +1,8 @@
+/*
+ * 模块导读：标志描绘轨迹与时间采样；数值属于参考动画校准数据。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { track } from "./boot-tracks.ts";
 
 // Position along the single shared contour, unwrapped across its closing point.

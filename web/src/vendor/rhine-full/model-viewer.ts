@@ -1,3 +1,8 @@
+/*
+ * 模块导读：独立三维模型查看器，负责模型加载、切换、镜头控制和渲染资源释放。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 import { disposeThreeTree } from "./three-resources.ts";
 import { themeEnvironment } from "./theme-material.ts";
@@ -33,6 +38,7 @@ type ModelSource = {
   dispose: () => void;
   setClarity?: (value: number) => void;
 };
+/** 独立模型查看器，组合装配模型、镜头导航、材质、画质和弹层生命周期。 */
 export class ModelViewer {
   private themeAmount = 0;
   setTheme(value: number) {
@@ -44,6 +50,7 @@ export class ModelViewer {
   private pipeline: ReturnType<typeof createViewerPipeline>;
   private quality = normalizeQuality(undefined);
   private superPerformance = false;
+  /** 释放查看器持有的渲染及模型资源，用于完整销毁时收尾。 */
   dispose() {
     this.disposeDeviceListener?.();
     this.request++;
@@ -91,6 +98,7 @@ export class ModelViewer {
   private provider?: () => Promise<ModelSource>;
   isOpen = false;
 
+  /** 建立查看器容器、镜头和输入监听，等待 open 时展示模型。 */
   constructor(
     parent: HTMLElement,
     onClose: () => void,
@@ -223,6 +231,7 @@ export class ModelViewer {
     }
   }
 
+  /** 打开指定模型，设置浏览上下文并开始进入过渡。 */
   open(
     id: string,
     title: string,
@@ -356,6 +365,7 @@ export class ModelViewer {
       .catch(() => {});
   }
 
+  /** 启动退出过渡；真正清理和焦点恢复由 finishClose 完成。 */
   close() {
     if (!this.isOpen || this.closing) return;
     this.closing = true;
@@ -404,6 +414,7 @@ export class ModelViewer {
       .catch(() => {});
   }
 
+  /** 完成关闭，清理当前显示模型和界面状态，交回外层操作。 */
   private finishClose() {
     // Keep rendering and retain modal focus until the visible exit completes.
     this.isOpen = false;
@@ -567,6 +578,7 @@ export class ModelViewer {
     }
   }
 
+  /** 根据画质设置更新查看器管线和尺寸。 */
   setQuality(quality: RenderQuality) {
     const key = JSON.stringify(quality);
     if (this.appliedQuality === key) return;
@@ -577,6 +589,7 @@ export class ModelViewer {
     this.resize();
   }
 
+  /** 按可见容器尺寸重设相机与渲染目标。 */
   resize() {
     if (!this.isOpen) return;
     const width = this.canvasHost.clientWidth,
@@ -606,6 +619,7 @@ export class ModelViewer {
           : "<span>拖动旋转</span><span>↑ ↓ ← → 平移</span><span>滚轮缩放</span>";
   }
 
+  /** 逐帧推进查看器进入/退出、镜头与模型动画。 */
   update(time: number) {
     if (!this.isOpen) return;
     themeEnvironment(this.scene, this.renderer, this.themeAmount);

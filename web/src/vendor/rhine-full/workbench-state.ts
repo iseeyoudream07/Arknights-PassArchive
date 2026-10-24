@@ -1,3 +1,8 @@
+/*
+ * 模块导读：工作台计时器的纯状态计算、日期键和持久化恢复规则。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 export type TimerState = { phase: "focus" | "break"; status: "idle" | "running" | "paused" | "done"; remaining: number; deadline: number };
 export const idleTimer = (): TimerState => ({ phase: "focus", status: "idle", remaining: 0, deadline: 0 });
 export const dayKey = (now: Date) => `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;

@@ -1,3 +1,9 @@
+/*
+ * 模块导读：三维终端总入口，协调启动、场景、档案选择、模型查看器、设置和宿主消息。
+ * 修改业务导航先检查 passToHost 的调用；收藏保存仍由外部二维宿主处理。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import {terminalCreditsMarkup} from "../../terminal-credits.ts";
 import {passContext, passToHost, passPreferences} from "../../terminal-context.ts";
 import {doctorIdentity} from "../../account-identity.ts";
@@ -86,7 +92,7 @@ $("#stage").innerHTML = `
   <nav class="system-nav" aria-label="系统导航">
     <button data-action="search"><span class="nav-glyph">⌕</span> ARCHIVE INDEX <span class="key">/</span></button>
     <button data-action="saved" aria-label="关注的系列档案" title="关注的系列档案">＋ SAVED <span id="saved-count">00</span></button>
-    <button class="pass-2d-nav" data-action="pass-catalog">二维档案</button>
+    <button class="pass-2d-nav" data-action="pass-catalog">通行认证目录</button>
     <button class="pass-business-nav" data-action="pass-collection">我的收藏</button>
     <button class="pass-business-nav" data-action="pass-stats">统计</button>
     <button class="settings-button" data-action="settings" aria-label="系统设置" title="系统设置">设置</button>
@@ -112,11 +118,11 @@ $("#stage").innerHTML = `
   </section>
   <section id="detail-ui" class="detail-ui" aria-label="档案内容" hidden>
     <button class="back-button" data-action="back">← <span>ARCHIVE OVERVIEW</span><small>ESC</small></button>
-    <div class="object-caption"><span id="object-id">NO.001</span><div>INTERNAL DATABASE</div><small>DRAG TO INSPECT <span>↔</span></small><button class="viewer-open" data-action="model-viewer">360° 查看文档模型 <span>↗</span></button></div>
+    <div class="object-caption"><span id="object-id">NO.001</span><div>INTERNAL DATABASE</div><small>DRAG TO INSPECT <span>↔</span></small><button class="viewer-open" data-action="model-viewer">360° 查看模型 <span>↗</span></button></div>
     <article id="detail-content" class="detail-content"></article>
   </section>
   <div class="powered">POWERED BY <b>RHINE LAB</b><i></i></div>
-  <footer class="system-footer"><span><i class="status-light"></i> LOCAL COLLECTION${isWallpaper ? '<button type="button" class="three-toggle" data-action="toggle-three" aria-pressed="true" title="卸载三维模型，保留 2D 界面">3D 开启</button>' : ""}</span><span>PASS ARCHIVE <i>／</i> <span id="clock">00:00:00</span></span><button data-action="replay" title="重播启动流程">REINITIALIZE ↗</button></footer>
+  <footer class="system-footer"><span><i class="status-light"></i> LOCAL COLLECTION${isWallpaper ? '<button type="button" class="three-toggle" data-action="toggle-three" aria-pressed="true" title="关闭三维效果，保留页面操作">3D 开启</button>' : ""}</span><span>PASS ARCHIVE <i>／</i> <span id="clock">00:00:00</span></span><button data-action="replay" title="重播启动流程">REINITIALIZE ↗</button></footer>
   <div id="pwa-update-notice" class="pwa-update-notice" role="status" hidden><span>新版本已就绪</span><button data-pwa-action="update">更新并重启 ↻</button></div>
   <div id="modal-root"></div><div id="toast" class="toast" role="status"></div>
   <div id="loading" class="loading"><div class="loading-mark">${logo}</div><span>CONNECTING TO INTERNAL DATABASE</span><i></i></div>
@@ -708,10 +714,10 @@ function renderDetail() {
   <div class="detail-kicker"><span>FILE ${r.id}</span><span>${escapeHtml(r.clearance)}</span></div>
   <h2>${escapeHtml(r.en)}</h2><div class="detail-title-cn">${escapeHtml(r.title)}<span>${escapeHtml(r.category)}</span></div>
   <div class="detail-rule"></div>
-  <dl class="metadata"><div><dt>SERIES / 系列</dt><dd>${escapeHtml(r.department)}</dd></div><div><dt>COLLECTION / 编目范围</dt><dd>${escapeHtml(r.date)}</dd></div><div><dt>CONTENTS / 盒内通行认证</dt><dd>${escapeHtml(r.lead)}</dd></div><div><dt>STATUS / 状态</dt><dd><i></i>${r.clearance === "RESTRICTED" ? "目录访问" : "已归档 · 可读取"}</dd></div></dl>
+  <dl class="metadata"><div><dt>SERIES / 系列</dt><dd>${escapeHtml(r.department)}</dd></div><div><dt>COLLECTION / 发行日期</dt><dd>${escapeHtml(r.date)}</dd></div><div><dt>CONTENTS / 盒内通行认证</dt><dd>${escapeHtml(r.lead)}</dd></div><div><dt>STATUS / 状态</dt><dd><i></i>${r.clearance === "RESTRICTED" ? "已收录" : "已收录"}</dd></div></dl>
   <div class="detail-tabs" role="tablist"><button id="tab-overview" class="active" role="tab" aria-controls="tab-panel" aria-selected="true" data-tab="overview">01 <span>概述</span></button><button id="tab-notes" role="tab" aria-controls="tab-panel" aria-selected="false" data-tab="notes">02 <span>系列资料</span></button><button id="tab-history" role="tab" aria-controls="tab-panel" aria-selected="false" data-tab="history">03 <span>访问日志</span></button><i class="tab-indicator" aria-hidden="true"></i></div>
   <div id="tab-panel" class="tab-panel" role="tabpanel">${overview()}</div></div>
-  <div class="detail-actions"><button class="pass-business-action" data-action="pass-series"><b>通行认证管理 ↗</b><span>拥有状态 · 价格 · 购买记录</span></button><button class="solid-button" data-action="bookmark">${saved.has(r.seriesId) ? "− UNFOLLOW SERIES" : "＋ FOLLOW SERIES"}<span>${saved.has(r.seriesId) ? "已关注" : "关注系列"}</span></button></div>
+  <div class="detail-actions"><button class="pass-business-action" data-action="pass-series"><b>管理本系列收藏 ↗</b><span>标记已拥有 · 填写市价和购买记录</span></button><button class="solid-button" data-action="bookmark">${saved.has(r.seriesId) ? "− UNFOLLOW SERIES" : "＋ FOLLOW SERIES"}<span>${saved.has(r.seriesId) ? "已关注" : "关注系列"}</span></button></div>
   <div class="detail-footnote"><button data-action="credits">来源与许可 ↗</button><span>${String(selected + 1).padStart(3, "0")} / ${String(records.length).padStart(3, "0")}</span></div>`;
   $("#detail-content").setAttribute("tabindex", "-1");
   $('[data-action="bookmark"]').setAttribute(
@@ -759,7 +765,7 @@ function setTab(tab: string, sound = true) {
             )
             .join(
               "",
-            )}<p class="log-note">记录本次浏览器会话的系列访问，不执行账号认证。</p>`;
+            )}<p class="log-note">这里显示本次打开页面后浏览过的系列，关闭页面后清除。</p>`;
   $("#tab-panel").scrollTop = 0;
   documentDecryption.refresh();
   if (sound) {
@@ -818,7 +824,7 @@ function renderModal() {
   if (!modal) return;
   modalTransition?.dispose();
   $("#modal-root").innerHTML =
-    `<div class="modal-backdrop"><section class="terminal-modal ${modal === "settings" || modal === "credits" ? "settings-modal" : ""}" role="dialog" aria-modal="true" aria-label="${modal === "settings" ? "系统设置" : modal === "credits" ? "来源与许可" : modal === "saved" ? "收藏档案" : "档案检索"}"><div class="modal-top"><span>PASS ARCHIVE / ${modal === "settings" ? "SYSTEM PREFERENCES" : modal === "credits" ? "SOURCES &amp; LICENSES" : "ARCHIVE DIRECTORY"}</span><button data-action="close-modal" aria-label="关闭窗口">CLOSE <span>×</span></button></div>${modal === "settings" ? settingsMarkup() : modal === "credits" ? terminalCreditsMarkup() : `<h2>${modal === "saved" ? "FOLLOWED SERIES" : "ARCHIVE INDEX"}<small>${modal === "saved" ? "关注系列" : "通行认证系列检索"}</small></h2><div class="search-field"><span>⌕</span><input id="archive-search" type="search" autocomplete="off" placeholder="搜索系列、干员、盒号、拼音或包装条码" aria-label="检索档案"/><span class="key">ESC</span></div><div class="category-filters">${categories.map((c, i) => `<button data-filter="${escapeHtml(c)}" class="${i === 0 ? "active" : ""}">${escapeHtml(c)}</button>`).join("")}</div><div class="result-header"><span>FILE / 档案</span><span>SERIES / 系列</span><span>ACCESS</span></div><div id="search-results" class="search-results"></div><div class="modal-bottom"><span id="result-count"></span><span>INTERNAL DATABASE <i>●</i> CONNECTED</span></div>`}</section></div>`;
+    `<div class="modal-backdrop"><section class="terminal-modal ${modal === "settings" || modal === "credits" ? "settings-modal" : ""}" role="dialog" aria-modal="true" aria-label="${modal === "settings" ? "系统设置" : modal === "credits" ? "来源与许可" : modal === "saved" ? "关注的系列" : "搜索系列"}"><div class="modal-top"><span>PASS ARCHIVE / ${modal === "settings" ? "SYSTEM PREFERENCES" : modal === "credits" ? "SOURCES &amp; LICENSES" : "ARCHIVE DIRECTORY"}</span><button data-action="close-modal" aria-label="关闭窗口">CLOSE <span>×</span></button></div>${modal === "settings" ? settingsMarkup() : modal === "credits" ? terminalCreditsMarkup() : `<h2>${modal === "saved" ? "FOLLOWED SERIES" : "ARCHIVE INDEX"}<small>${modal === "saved" ? "关注系列" : "搜索通行认证系列"}</small></h2><div class="search-field"><span>⌕</span><input id="archive-search" type="search" autocomplete="off" placeholder="搜索系列、干员、盒号、拼音或包装条码" aria-label="检索档案"/><span class="key">ESC</span></div><div class="category-filters">${categories.map((c, i) => `<button data-filter="${escapeHtml(c)}" class="${i === 0 ? "active" : ""}">${escapeHtml(c)}</button>`).join("")}</div><div class="result-header"><span>FILE / 档案</span><span>SERIES / 系列</span><span>ACCESS</span></div><div id="search-results" class="search-results"></div><div class="modal-bottom"><span id="result-count"></span><span>INTERNAL DATABASE <i>●</i> CONNECTED</span></div>`}</section></div>`;
   const backdrop = $(".modal-backdrop");
   backdrop.hidden = true;
   modalTransition = new SurfaceTransition(backdrop, $(".terminal-modal"));
@@ -858,7 +864,7 @@ function renderResults() {
             `<button class="result-row" data-result="${i}"><span class="result-name"><b>${r.id}</b><span>${escapeHtml(r.title)}<small>${escapeHtml(r.en)}</small></span>${saved.has(r.seriesId) ? "<i>＋</i>" : ""}</span><span>${escapeHtml(r.department)}</span><span>${r.clearance === "RESTRICTED" ? "CATALOG ONLY" : "AUTHORIZED"} <i>↗</i></span></button>`,
         )
         .join("")
-    : `<div class="empty-results"><span>∅</span><strong>${modal === "saved" && !searchQuery ? "尚无关注系列" : "没有匹配的档案"}</strong><p>${modal === "saved" && !searchQuery ? "读取系列后选择 FOLLOW SERIES，将它加入关注列表。标记通行证拥有状态请进入通行证管理。" : "尝试其他名称、盒号、拼音或系列分类。"}</p><button data-action="reset-search">${modal === "saved" ? "查看全部档案 →" : "重置检索 →"}</button></div>`;
+    : `<div class="empty-results"><span>∅</span><strong>${modal === "saved" && !searchQuery ? "尚无关注系列" : "没有找到符合条件的系列"}</strong><p>${modal === "saved" && !searchQuery ? "打开系列后点击“关注系列”，即可加入关注列表。要记录已拥有的款式，请进入收藏管理。" : "尝试其他名称、盒号、拼音或系列分类。"}</p><button data-action="reset-search">${modal === "saved" ? "查看全部系列 →" : "清除搜索条件 →"}</button></div>`;
   $("#result-count").textContent =
     `${String(results.length).padStart(2, "0")} RECORDS FOUND`;
 }
@@ -866,22 +872,22 @@ function updateQualitySummary() {
   const summary = document.querySelector("#quality-summary");
   if (!summary) return;
   if (!scene) {
-    summary.textContent = "3D 已关闭 · 三维模型与渲染资源已释放";
+    summary.textContent = "三维效果已关闭，可继续使用目录和收藏功能。";
     return;
   }
   const canvas = scene.renderer.domElement;
   const metrics = JSON.parse(
     canvas.parentElement?.dataset.renderQuality ?? "{}",
   );
-  summary.textContent = `${superPerformanceEnabled() ? "超级性能模式已启用 · 画质设置暂被覆盖，关闭后恢复 · " : ""}实际渲染 ${canvas.width} × ${canvas.height} · ${effectiveRenderQuality().antialias === "smaa" ? "SMAA" : "原始抗锯齿"} · 纹理 ${metrics.anisotropy ?? 1}×${metrics.limited ? " · 已达到缓冲上限" : ""}`;
+  summary.textContent = `${superPerformanceEnabled() ? "流畅模式已开启，关闭后恢复原来的画质 · " : ""}实际渲染 ${canvas.width} × ${canvas.height} · ${effectiveRenderQuality().antialias === "smaa" ? "SMAA" : "原始抗锯齿"} · 纹理 ${metrics.anisotropy ?? 1}×${metrics.limited ? " · 已达到设备支持的上限" : ""}`;
 }
 function motionPreferenceNoteMarkup() {
   const preset = prefs.motionPreset;
   const allEnabled = Object.values(prefs.motion).every(Boolean);
-  return `<div id="motion-preference-note" class="motion-preference-note"><p>${motionSummary(prefs.motion)}</p><span>预设：${preset === "full" ? "完整动画" : preset === "reduced" ? "减少动画" : "自定义"} · 选择会保存在本站</span>${allEnabled ? "" : '<button data-action="enable-motion">启用完整动画并重播 ↻</button>'}</div>`;
+  return `<div id="motion-preference-note" class="motion-preference-note"><p>${motionSummary(prefs.motion)}</p><span>预设：${preset === "full" ? "完整动画" : preset === "reduced" ? "关闭动画" : "自定义"} · 设置会保存在当前浏览器</span>${allEnabled ? "" : '<button data-action="enable-motion">启用完整动画并重播 ↻</button>'}</div>`;
 }
 function settingsMarkup() {
-  return `<h2>SYSTEM SETTINGS<small>终端偏好设置</small></h2><p class="settings-intro">PASS ARCHIVE · 本机收藏档案</p><div class="pass-host-links"><button data-action="pass-account">账号与同步 ↗</button><button data-action="saved">关注系列 ↗</button><button data-action="pass-catalog">通行证目录 ↗</button><button data-action="pass-collection">我的收藏 ↗</button><button data-action="pass-stats">收藏统计 ↗</button><button data-action="pass-settings">收藏备份与数据设置 ↗</button><button data-action="credits">来源与许可 ↗</button></div>${isWallpaper ? '<p class="wallpaper-settings-note">每次启动都会读取 Wallpaper Engine 中的设置。在此修改仅对当前运行生效，无法持久保存；如需保留，请在 Wallpaper Engine 的壁纸属性中调整。</p>' : ""}<div class="settings-list">${themeSettingsMarkup(prefs.colorTheme === "dark")}${!isWallpaper ? `<label><div><strong>SUPER PERFORMANCE</strong><span>降低三维画质和渲染分辨率，保留完整动效；关闭后恢复原画质</span></div><input type="checkbox" data-pref="superPerformance" ${prefs.superPerformance ? "checked" : ""}/><i class="toggle"></i></label>` : ""}${workbench?.settingsMarkup() ?? ""}${audioSettingsMarkup(prefs)}</div>${motionPreferenceNoteMarkup()}${motionSettingsMarkup(prefs.motion, prefs.motionPreset)}${qualityMarkup(prefs.rendering)}${pwaSettingsMarkup()}<div class="settings-shortcuts">${isWallpaper ? "<span>DESKTOP CONTROLS</span><p>拖动阵列或点击界面按钮浏览档案。桌面模式下，方向键与滚轮可能无法传入壁纸。</p>" : "<span>KEYBOARD CONTROLS</span><p><kbd>←</kbd><kbd>→</kbd> 切列 <kbd>↑</kbd><kbd>↓</kbd> 选档 <kbd>ENTER</kbd> 读取 <kbd>/</kbd> 检索 <kbd>ESC</kbd> 返回</p>"}</div><div class="settings-bottom">${!isWallpaper && document.fullscreenEnabled ? '<button data-action="fullscreen">FULLSCREEN <span>↗</span></button>' : ""}<button data-action="restart">REINITIALIZE SYSTEM <span>↻</span></button></div><div class="modal-bottom"><span>PASS ARCHIVE / 0.4.5 · 使用 MiSans 字体（小米） <a href="${assetUrl("fonts/MiSans-license.pdf")}" target="_blank" rel="noopener">字体许可</a></span><span>POWERED BY RHINE LAB</span></div>`;
+  return `<h2>SYSTEM SETTINGS<small>终端偏好设置</small></h2><p class="settings-intro">PASS ARCHIVE · 通行认证收藏管理</p><div class="pass-host-links"><button data-action="pass-account">账号与同步 ↗</button><button data-action="saved">关注系列 ↗</button><button data-action="pass-catalog">通行认证目录 ↗</button><button data-action="pass-collection">我的收藏 ↗</button><button data-action="pass-stats">收藏统计 ↗</button><button data-action="pass-settings">备份与设置 ↗</button><button data-action="credits">来源与许可 ↗</button></div>${isWallpaper ? '<p class="wallpaper-settings-note">每次启动都会读取 Wallpaper Engine 中的设置。在此修改仅对当前运行生效，无法持久保存；如需保留，请在 Wallpaper Engine 的壁纸属性中调整。</p>' : ""}<div class="settings-list">${themeSettingsMarkup(prefs.colorTheme === "dark")}${!isWallpaper ? `<label><div><strong>流畅模式</strong><span>降低画质，让三维页面运行更流畅；关闭后恢复原来的画质</span></div><input type="checkbox" data-pref="superPerformance" ${prefs.superPerformance ? "checked" : ""}/><i class="toggle"></i></label>` : ""}${workbench?.settingsMarkup() ?? ""}${audioSettingsMarkup(prefs)}</div>${motionPreferenceNoteMarkup()}${motionSettingsMarkup(prefs.motion, prefs.motionPreset)}${qualityMarkup(prefs.rendering)}${pwaSettingsMarkup()}<div class="settings-shortcuts">${isWallpaper ? "<span>DESKTOP CONTROLS</span><p>拖动阵列或点击界面按钮浏览档案。桌面模式下，方向键与滚轮可能无法传入壁纸。</p>" : "<span>KEYBOARD CONTROLS</span><p><kbd>←</kbd><kbd>→</kbd> 切列 <kbd>↑</kbd><kbd>↓</kbd> 选档 <kbd>ENTER</kbd> 读取 <kbd>/</kbd> 检索 <kbd>ESC</kbd> 返回</p>"}</div><div class="settings-bottom">${!isWallpaper && document.fullscreenEnabled ? '<button data-action="fullscreen">全屏显示 <span>↗</span></button>' : ""}<button data-action="restart">重播启动动画 <span>↻</span></button></div><div class="modal-bottom"><span>PASS ARCHIVE / 0.4.5 · 使用 MiSans 字体（小米） <a href="${assetUrl("fonts/MiSans-license.pdf")}" target="_blank" rel="noopener">字体许可</a></span><span>POWERED BY RHINE LAB</span></div>`;
 }
 
 document.addEventListener("input", (e) => {
@@ -1430,7 +1436,7 @@ function syncThreeButton() {
       ? "重新载入三维模型"
       : threeState === "closing"
         ? "取消关闭，恢复三维画面"
-        : "卸载三维模型，保留 2D 界面";
+        : "关闭三维效果，保留页面操作";
 }
 function releaseThree() {
   if (!scene) return;
@@ -1555,7 +1561,7 @@ async function start() {
   } catch (error) {
     console.error(error);
     $("#loading").innerHTML =
-      '<div class="error-state"><strong>CONNECTION INTERRUPTED</strong><p>三维档案资源未能载入。请确认浏览器已启用硬件加速，然后重新连接。</p><button data-action="pass-catalog">通行证目录 →</button></div>';
+      '<div class="error-state"><strong>CONNECTION INTERRUPTED</strong><p>三维档案资源未能载入。请确认浏览器已启用硬件加速，然后重新连接。</p><button data-action="pass-catalog">通行认证目录 →</button></div>';
     passToHost("failure");
   }
 }

@@ -1,3 +1,8 @@
+/* 独立开屏扫描圆环的参考帧采样。
+ * 此目录为独立开屏参考子集；整站三维终端使用 vendor/rhine-full。
+ * 保留原有版权和来源声明；项目阅读路线见 docs/code-guide-zh.md。
+ */
+
 import { track } from "./boot-tracks.ts";
 
 // Source frames 543–568. Angles are unwrapped: the left arc turns clockwise,

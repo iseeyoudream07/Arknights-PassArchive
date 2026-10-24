@@ -1,6 +1,6 @@
 # 共享 API v1
 
-基础地址 `https://arknights.yukkuri.win/api/v1/`。所有路径以 `/` 结尾，POST 使用 `Content-Type: application/json`。请求正文上限 2 MB。
+基础地址 `https://arknights.yukkuri.win/api/v1/`。所有路径以 `/` 结尾，POST 使用 `Content-Type: application/json`。请求正文上限 2 MiB（2,097,152 字节）；JSON 最多嵌套 64 层，根节点计为第 0 层。超限请求会被拒绝：应用接口返回 400，反向代理可能返回 413。
 
 | 接口 | 说明 |
 |---|---|
@@ -46,12 +46,14 @@
 }
 ```
 
-`unmapped` 保存无法关联当前目录的条目，新旧备份都保留。旧版 `{exportedAt, collection}` 与直接系列字典可转换，兼容 `{market,cost}` 和 `{market,lots}`。导入采用用户确认后的合并，同一 ID 以导入值为准；本机保留导入前恢复点。
+`unmapped` 保存无法关联当前目录的条目，新旧备份都保留。旧版 `{exportedAt, collection}` 与直接系列字典可转换，兼容 `{market,cost}` 和 `{market,lots}`。导入采用用户确认后的合并，同一 ID 以导入值为准；本机保留导入前恢复点；预览后账号或收藏发生变化时，需重新预览再确认。
 
 目录 ID 基于原系列、原标签及原干员名生成，并保存旧名映射。更新名称时需要维护迁移映射，不能直接删除旧关联。目录、规则和图片应作为一个版本发布。
 
 ## 账号与同步
 
+Web 目录维护使用独立的 root 权限接口；公开目录会合并管理员已保存的修改，稳定 ID 不变。外部接入接口默认关闭且不在前端展示，详见 [后台与外部接入协议](admin.md)。
+
 目录仍为公共只读数据，统计与备份校验接口仍无状态。Web 账号使用同源 Cookie 会话与 CSRF 校验；私人存档保存在 PostgreSQL，所有私人响应禁止缓存。
 
-`GET me/archive/` 返回 `{user_id,revision,backup,updated_at}`。PUT 接收 `{expected_user_id,base_revision,backup}`，事务内校验版本与当前账号。版本冲突返回 409 `revision_conflict` 和自己的最新云端文档；账号不匹配返回 409 `account_changed`。客户端进行三方合并，同一条不同改动由用户选择，不会静默覆盖。完整协议与实现范围见 `accounts.md`。iOS 登录和同步尚未接入。
+`GET me/archive/` 返回 `{user_id,revision,backup,updated_at}`。PUT 接收 `{expected_user_id,base_revision,backup}`，事务内校验版本与当前账号。版本冲突返回 409 `revision_conflict` 和自己的最新云端文档；账号不匹配返回 409 `account_changed`。客户端进行三方合并，同一条不同改动由用户选择，不会静默覆盖。Web 与 iOS 使用同一账号和备份协议。原生请求也提交会话 Cookie、CSRF 和同源 Origin/Referer。完整协议见 `accounts.md`，原生联调方法见 `ios.md`。

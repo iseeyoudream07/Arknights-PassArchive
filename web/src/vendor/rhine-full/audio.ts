@@ -1,3 +1,8 @@
+/*
+ * 模块导读：终端声音系统：程序合成音效、开屏提示点、背景音轨和音量偏好。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { hasTypingBetween } from "./typing-rhythm.ts";
 import { TYPING_PCM, TYPING_SAMPLE_RATE } from "./typing-samples.ts";
 import { assetUrl } from "./asset-url.ts";

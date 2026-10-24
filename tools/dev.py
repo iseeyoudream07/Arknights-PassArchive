@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# PyCharm 与终端共用的本机开发入口：setup 初始化、run 整站、web 前端、check 检查。
+# 排查启动问题从 main → local_environment → ready/supervise 跟踪；本脚本固定选择本项目 SQLite。
+
 """Local PyCharm/terminal entry point: setup, run, web and check."""
 from __future__ import annotations
 
@@ -23,6 +26,8 @@ PYTHON = ROOT / '.venv' / ('Scripts/python.exe' if os.name == 'nt' else 'bin/pyt
 STATE = ROOT / '.venv/passarchive-dev-setup.json'
 
 
+# 复制当前进程环境，再移除继承的数据库/Django 配置，构造本机专用设置。
+# 返回值传给子进程，不修改父进程环境；macOS 下补充常见 Node.js 安装路径。
 def local_environment() -> dict[str, str]:
     env = os.environ.copy()
     # Local development always selects this checkout's SQLite database.
@@ -46,11 +51,13 @@ def local_environment() -> dict[str, str]:
     return env
 
 
+# 打印当前步骤并同步执行子命令；非零退出码会中止后续步骤。
 def command(label: str, args: list[str], cwd: Path, env: dict[str, str]) -> None:
     print(f'\n{label}', flush=True)
     subprocess.run(args, cwd=cwd, env=env, check=True)
 
 
+# 定位 Node.js/npm 并检查最低版本；返回 npm 的可执行路径。
 def npm_runtime(env: dict[str, str]) -> str:
     node = shutil.which('node', path=env['PATH'])
     npm = shutil.which('npm', path=env['PATH'])
@@ -63,6 +70,8 @@ def npm_runtime(env: dict[str, str]) -> str:
     return npm
 
 
+# 按依赖文件摘要判断是否安装 Python/Web 依赖，然后迁移本机 SQLite。
+# 安装状态写入 .venv/passarchive-dev-setup.json，避免每次重复安装。
 def setup(env: dict[str, str]) -> None:
     if sys.version_info < (3, 12):
         raise RuntimeError('请使用 Python 3.12+ 创建项目解释器。')
@@ -85,12 +94,14 @@ def setup(env: dict[str, str]) -> None:
     print('\n初始化完成。PyCharm 解释器选择 .venv，然后运行「02 运行整站」。', flush=True)
 
 
+# 确认虚拟环境和前端依赖已初始化，再检查 Node.js/npm 是否可用。
 def ready(env: dict[str, str]) -> str:
     if not PYTHON.is_file() or not (WEB / 'node_modules/vite/bin/vite.js').is_file():
         raise RuntimeError('请先运行「01 初始化开发环境」或 python3 tools/dev.py setup。')
     return npm_runtime(env)
 
 
+# 尝试绑定本机端口；若端口被占用，提示先停止已有开发服务。
 def available(port: int) -> None:
     with socket.socket() as sock:
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -100,9 +111,12 @@ def available(port: int) -> None:
             raise RuntimeError(f'本机 {port} 端口已被使用，请先停止已有的开发服务。') from error
 
 
+# 启动并监控开发子进程；任一进程退出后统一回收整组进程。
+# 处理 PyCharm 停止按钮和 Ctrl+C，避免留下占用 8000/5173 端口的进程。
 def supervise(jobs: list[tuple[list[str], Path]], env: dict[str, str]) -> int:
     children: list[subprocess.Popen] = []
 
+    # 把终止信号转换为 KeyboardInterrupt，使统一清理逻辑能够执行。
     def interrupted(_signum, _frame):
         raise KeyboardInterrupt
 
@@ -121,6 +135,7 @@ def supervise(jobs: list[tuple[list[str], Path]], env: dict[str, str]) -> int:
             time.sleep(0.2)
     except KeyboardInterrupt:
         return 0
+    # 即使启动失败或收到停止信号，也会进入清理，先温和终止，超时再强制回收。
     finally:
         signal.signal(signal.SIGTERM, previous)
         for child in reversed(children):
@@ -146,6 +161,7 @@ def supervise(jobs: list[tuple[list[str], Path]], env: dict[str, str]) -> int:
                 child.wait()
 
 
+# 解析 setup/run/web/check 操作并分派；默认 run 同时启动 API 与前端。
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('action', nargs='?', default='run', choices=['setup', 'run', 'web', 'check'])
@@ -161,6 +177,7 @@ def main() -> int:
         command('构建 Web…', [npm, 'run', 'build'], WEB, env)
         command('运行前端测试…', [npm, 'test'], WEB, env)
         return 0
+    # 整站和前端独立配置共用 5173，先检查占用；后端断点配置另占用 8000。
     available(5173)
     web_job = ([npm, 'run', 'dev', '--', '--port', '5173', '--strictPort'], WEB)
     if args.action == 'web':

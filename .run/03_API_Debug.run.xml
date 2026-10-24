@@ -1,3 +1,4 @@
+<!-- Python 断点调试：直接启动 Django；关闭自动重载，避免子进程导致断点跟丢。 -->
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="03 API 断点调试" type="PythonConfigurationType" factoryName="Python">
     <module name="Arknights-PassArchive" />

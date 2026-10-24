@@ -1,3 +1,8 @@
+/*
+ * 模块导读：识别壁纸宿主并封装属性和帧回调；普通浏览器使用默认路径。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 export const isWallpaper = import.meta.env.MODE === "wallpaper";
 if (isWallpaper) document.documentElement.dataset.wallpaper = "true";
 export type WallpaperProperties = Record<string, { value: unknown }>;

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：独立查看器的镜头位置与目标过渡控制。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 
 const shortestAngle = (angle: number) =>

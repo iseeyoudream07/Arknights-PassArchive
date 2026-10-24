@@ -1,3 +1,8 @@
+/*
+ * 模块导读：将业务目录转换成三维档案、分类列及位置索引，连接 rhine-records 与场景。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import {makeRhineRecords, rhineColumnTypes, seriesLabels, type RhineRecord} from '../../rhine-records.ts';
 import {passContext} from '../../terminal-context.ts';
 

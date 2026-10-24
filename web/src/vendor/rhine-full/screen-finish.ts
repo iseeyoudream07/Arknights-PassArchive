@@ -1,3 +1,8 @@
+/*
+ * 模块导读：画面收尾的屏幕效果与后处理，统一渲染输出观感。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 /** SourceGraphic includes WebGL, DOM controls, frosted surfaces and the viewer. */
 export class ScreenFinish {
   private svg: SVGSVGElement;

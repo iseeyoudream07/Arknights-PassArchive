@@ -1,3 +1,8 @@
+/*
+ * 模块导读：壁纸宿主模式的背景管理，不影响普通浏览器目录数据。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import type { WallpaperProperties } from "./wallpaper.ts";
 import { wallpaperImageUrl } from "./wallpaper-image-url.ts";
 

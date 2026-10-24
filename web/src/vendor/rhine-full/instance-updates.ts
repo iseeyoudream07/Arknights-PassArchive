@@ -1,3 +1,8 @@
+/*
+ * 模块导读：汇总实例矩阵的变更范围，减少每帧整块实例数据上传。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { InstancedBufferAttribute } from 'three';
 
 /** Compare the actual Float32 GPU values, then upload one contiguous changed range. */

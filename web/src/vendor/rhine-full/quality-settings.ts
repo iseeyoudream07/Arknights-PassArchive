@@ -1,3 +1,8 @@
+/*
+ * 模块导读：生成画质设置界面，并把当前参数同步到对应控件。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import {
   matchingPreset,
   presetLabels,
@@ -48,18 +53,18 @@ function range(
 export function qualityMarkup(quality: RenderQuality) {
   const preset = matchingPreset(quality);
   return `<section class="quality-settings" aria-label="画质设置">
-    <div class="quality-heading"><h3>RENDER QUALITY <span>渲染画质</span></h3>${choiceControl('id="quality-preset"', "画质预设", preset, (Object.keys(presetLabels) as QualityPreset[]).map(key => [key, presetLabels[key]]))}</div>
+    <div class="quality-heading"><h3>RENDER QUALITY <span>画质设置</span></h3>${choiceControl('id="quality-preset"', "画质预设", preset, (Object.keys(presetLabels) as QualityPreset[]).map(key => [key, presetLabels[key]]))}</div>
     <p class="quality-summary" id="quality-summary" aria-live="polite"></p>
-    <details class="quality-advanced"><summary>精细设置 <span>清晰度 / 材质 / 阴影</span></summary><div class="quality-grid">
-    ${range(quality, "scale", "渲染比例", "相对屏幕像素，受密度上限限制；高比例改善细线", 50, 200)}
+    <details class="quality-advanced"><summary>高级画质设置 <span>清晰度 / 材质 / 阴影</span></summary><div class="quality-grid">
+    ${range(quality, "scale", "渲染比例", "调高可让细线更清晰，也会增加设备负担", 50, 200)}
     ${select(
       quality,
       "pixelRatio",
       "像素密度上限",
-      "控制高密度屏幕的原生像素倍率",
+      "调高可提高屏幕清晰度，也会增加设备负担",
       [1, 1.5, 2, 3].map((v) => [v, `${v}×`]),
     )}
-    ${select(quality, "antialias", "抗锯齿", "SMAA 平滑模型边缘与后处理结果", [
+    ${select(quality, "antialias", "抗锯齿", "开启 SMAA 可让模型边缘更平滑", [
       ["off", "原始"],
       ["smaa", "SMAA"],
     ])}
@@ -67,21 +72,21 @@ export function qualityMarkup(quality: RenderQuality) {
       quality,
       "anisotropy",
       "纹理过滤",
-      "改善倾斜视角下的标签细节",
+      "调高可让倾斜角度下的文字和纹理更清晰",
       [1, 2, 4, 8, 16].map((v) => [v, `${v}×`]),
     )}
     ${select(
       quality,
       "transmission",
       "透明材质分辨率",
-      "控制盖板折射画面的清晰度",
+      "调高可让透过玻璃看到的画面更清晰",
       [0.25, 0.5, 0.75, 1].map((v) => [v, `${v * 100}%`]),
     )}
     ${select(
       quality,
       "shadows",
       "阴影分辨率 · 阵列",
-      "更高分辨率保留更细的投影边缘",
+      "调高可让阴影边缘更细腻",
       [
         [0, "关闭"],
         [1024, "1024"],
@@ -93,7 +98,7 @@ export function qualityMarkup(quality: RenderQuality) {
       quality,
       "aoSamples",
       "环境遮蔽 · 阵列",
-      "采样越多，接缝暗部越细腻",
+      "调高可让模型接缝处的阴影更自然",
       [
         [0, "关闭"],
         [16, "16 采样"],
@@ -105,11 +110,11 @@ export function qualityMarkup(quality: RenderQuality) {
       quality,
       "aoResolution",
       "遮蔽分辨率 · 阵列",
-      "降低可减轻环境遮蔽的渲染负担",
+      "调低可让页面运行更流畅",
       [0.5, 0.75, 1].map((v) => [v, `${v * 100}%`]),
     )}
-    ${range(quality, "depthOfField", "景深强度 · 阵列", "0% 关闭；100% 保留原始镜头虚化", 0, 150)}
-    </div></details><p class="quality-note">${isWallpaper ? "即时生效，仅限当前运行；长期设置请在 Wallpaper Engine 中调整。" : "即时生效并自动保存。"}清晰度与材质设置同步至 360° 查看器。高渲染比例更适合静态观察；缓冲上限为 829 万像素，硬件限制时自动收敛。</p>
+    ${range(quality, "depthOfField", "景深强度 · 阵列", "0% 为关闭，调高可增强背景虚化", 0, 150)}
+    </div></details><p class="quality-note">${isWallpaper ? "即时生效，仅限当前运行；长期设置请在 Wallpaper Engine 中调整。" : "即时生效并自动保存。"}这些设置也适用于 360° 模型查看。调高画质会增加设备负担，超过设备支持范围时会自动调整。</p>
   </section>`;
 }
 

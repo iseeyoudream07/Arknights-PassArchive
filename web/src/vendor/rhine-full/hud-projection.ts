@@ -1,3 +1,8 @@
+/*
+ * 模块导读：将三维位置和四边形投影到屏幕 HUD，保持文字面板与模型对齐。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 export type HudPoint = { x: number; y: number };
 
 /** Radial HUD surface with a bounded frame; tracking varies tangential terms. */

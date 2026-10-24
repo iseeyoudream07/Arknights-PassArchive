@@ -1,3 +1,8 @@
+/*
+ * 模块导读：规范化壁纸宿主图片地址，兼容 Web URL 与本地 Windows/Unix 路径。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 /** Host file properties may contain a raw Windows path or an escaped path. */
 export function wallpaperImageUrl(value: string) {
   let path = value.replaceAll("\\", "/");

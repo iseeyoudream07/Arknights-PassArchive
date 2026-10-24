@@ -5,6 +5,8 @@ __pycache__/
 *.py[cod]
 web/dist/
 ios/build/
+ios/.build/
+ios/.swiftpm/
 build/
 DerivedData/
 xcuserdata/

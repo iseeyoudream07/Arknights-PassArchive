@@ -1,3 +1,8 @@
+/*
+ * 模块导读：游戏手柄输入和当前输入设备跟踪，把按键/摇杆映射到终端操作。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 type PressedKeys = Set<string>;
 
 function currentPad(): Gamepad | undefined {

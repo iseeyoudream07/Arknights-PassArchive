@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# 从干净且已提交的 Git 工作区制作公开源码包和 Web 静态包。
+# 执行会构建并写入 artifacts/releases/；普通本机调试使用 tools/dev.py。
+
 """Build source and static Web distributions from a clean, committed checkout."""
 from __future__ import annotations
 
@@ -16,10 +19,12 @@ FORBIDDEN = {".git", ".venv", "node_modules", "__pycache__", "artifacts", "sourc
 SECRET = re.compile(rb"(?:-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[A-Z0-9]{16})")
 
 
+# 在项目根目录执行 Git 并返回原始字节；避免依赖调用者的工作目录。
 def git(*args: str) -> bytes:
     return subprocess.check_output(["git", *args], cwd=ROOT)
 
 
+# 检查公开包路径，排除依赖、数据库、密钥文件及现场发布脚本。
 def validate_public_path(name: str) -> None:
     path = Path(name)
     assert not path.is_absolute() and ".." not in path.parts, name
@@ -29,6 +34,7 @@ def validate_public_path(name: str) -> None:
     assert not (path.parts[0] == "deploy" and path.name.startswith(("publish-", "prepare-", "finalize-"))), name
 
 
+# 检查 Git 跟踪文件的路径、体积与已知凭据特征，返回可打包文件清单。
 def audit_sources() -> list[str]:
     names = git("ls-files", "-z").decode().rstrip("\0").split("\0")
     for name in names:
@@ -40,16 +46,19 @@ def audit_sources() -> list[str]:
     return names
 
 
+# 要求工作区干净，确保发布包能追溯到明确提交。
 def clean_checkout() -> None:
     if git("status", "--porcelain").strip():
         raise SystemExit("Commit or remove public working-tree changes before creating a release.")
 
 
+# 流式计算成品 SHA-256，供发布校验清单使用。
 def digest(path: Path) -> str:
     with path.open("rb") as handle:
         return hashlib.file_digest(handle, "sha256").hexdigest()
 
 
+# 读取版本并审核源码，按参数构建/复用静态产物，最后打包与生成校验和。
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-only", action="store_true", help="Only archive the committed source tree")
@@ -77,7 +86,7 @@ def main() -> None:
         dist = ROOT / "web/dist"
         manifest = json.loads((dist / "app-cache.json").read_text())
         assert manifest["version"] == version
-        required = ["index.html", "terminal.html", "credits.html", "login.html", "catalog.json", "sw.js",
+        required = ["index.html", "terminal.html", "credits.html", "login.html", "admin.html", "catalog.json", "sw.js",
                     "LICENSE", "THIRD_PARTY_NOTICES.md", "licenses/CC-BY-NC-4.0.txt",
                     "rhine/assets/archive-cassette.glb", "rhine/assets/archive-assembly.glb",
                     "rhine/fonts/MiSans-license.pdf"]

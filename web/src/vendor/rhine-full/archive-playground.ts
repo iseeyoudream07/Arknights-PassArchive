@@ -1,3 +1,8 @@
+/*
+ * 模块导读：三维阵列互动模式，协调音频频段、目标提示、计分和输入隔离。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { RelayRound, SpectrumEnvelope } from "./archive-play-motion.ts";
 import type { ArchiveScene } from "./scene.ts";
 import { wallpaperHost, type WallpaperProperties } from "./wallpaper.ts";

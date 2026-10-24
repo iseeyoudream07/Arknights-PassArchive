@@ -1,3 +1,8 @@
+/*
+ * 模块导读：工作台文字与面板的滚动更新，尽量保留已有 DOM 节点。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { createRollingText } from "@kitlangton/rolling-number";
 
 const controllers = new WeakMap<HTMLElement, ReturnType<typeof createRollingText>>();

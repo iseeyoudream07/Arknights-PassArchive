@@ -1,3 +1,8 @@
+/*
+ * 模块导读：把屏幕拖动映射为阵列行/列位移，并计算释放后的惯性和吸附。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 export type DragAxis = "lane" | "row";
 export type DragPosition = Record<DragAxis, number>;
 export type DragProjection = Record<DragAxis, { x: number; y: number }>;

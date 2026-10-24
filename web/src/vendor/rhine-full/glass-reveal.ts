@@ -1,3 +1,8 @@
+/*
+ * 模块导读：玻璃磨砂到清晰的透射计算及 GLSL 片段，供解密扫描效果复用。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 // A feathered clearing front travels from the top to the bottom of the cover.
 // Progress endpoints are wholly frosted / wholly clear, including the rim.
 const FEATHER = 0.12;

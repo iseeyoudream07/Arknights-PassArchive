@@ -1,3 +1,9 @@
+/*
+ * 模块导读：档案阵列核心场景 ArchiveScene：模型、实例池、镜头、交互及逐帧绘制。
+ * 调试资源泄漏时同时检查 dispose 和 three-resources.ts；日常业务修改优先在外层适配。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import * as THREE from "three";
 import { ArchiveVisibility } from "./archive-visibility.ts";
 import { ArchiveDrawCoverage, ArchiveShadowCoverage } from "./archive-draw-coverage.ts";
@@ -57,6 +63,7 @@ const ease = (t: number) => {
   t = THREE.MathUtils.clamp(t, 0, 1);
   return t * t * t * (t * (t * 6 - 15) + 10);
 };
+/** 档案阵列场景，统一维护实例池、模型、交互、镜头和后处理资源。 */
 export class ArchiveScene {
   private inputEvents = new AbortController();
   private presence = 1;
@@ -72,6 +79,7 @@ export class ArchiveScene {
     return 35 * Math.pow(THREE.MathUtils.clamp((1 - this.presence - delay) / .7, 0, 1), 2);
   }
   revealImmediately() { this.reveal = this.targetReveal; }
+  /** 释放场景占用的 GPU 资源及相关状态；复用对象与共享材质需注意所有权。 */
   dispose() {
     this.inputEvents.abort();
     this.cancelPointer();
@@ -251,6 +259,7 @@ export class ArchiveScene {
   onSelect?: (index: number, cell?: ArchiveCell) => void;
   onHover?: (index: number | null) => void;
   onNavigate?: (axis: "row" | "lane", direction: number) => void;
+  /** 创建渲染器及场景基础设施，具体模型随后异步 load。 */
   constructor(
     private container: HTMLElement,
     private readonly selectionPulse = baselineSelectionWave,
@@ -339,6 +348,7 @@ export class ArchiveScene {
     this.composer.addPass(new OutputPass());
     this.bindPointer();
   }
+  /** 加载档案模型并建立实例材质和标签；调试模型缺失或加载失败从这里开始。 */
   async load(assetUrl = publicAsset("assets/archive-cassette.glb")) {
     this.labelMark.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(labelMarkSvg)}`;
     await this.labelMark.decode();
@@ -506,6 +516,7 @@ export class ArchiveScene {
   }
 
   private assemblyTemplate?: Promise<THREE.Group>;
+  /** 为拆解查看准备装配模型，供独立模型查看器使用。 */
   async createAssemblyModel() {
     this.assemblyTemplate ??= new GLTFLoader()
       .loadAsync(publicAsset("assets/archive-assembly.glb"))
@@ -573,6 +584,7 @@ export class ArchiveScene {
       },
     };
   }
+  /** 切换隐藏、阵列和详情模式，并更新对应显示与过渡状态。 */
   setMode(mode: "hidden" | "archive" | "detail") {
     this.cancelPointer();
     this.setHover(null);
@@ -602,6 +614,7 @@ export class ArchiveScene {
   }
   // Legacy review pages use the old whole-scene toggle.
   setReduced(value: boolean) { this.setMotion(value ? reducedMotion() : fullMotion()); }
+  /** 应用当前动效偏好，关闭某项时仍要保持可交互的最终状态。 */
   setMotion(value: MotionPreferences) {
     if ((!value.pointerParallax || !value.dragMomentum) && (this.motion.pointerParallax || this.motion.dragMomentum)) this.cancelPointer();
     if (!value.dragMomentum) {
@@ -626,6 +639,7 @@ export class ArchiveScene {
     // Disabling the reveal animation preserves the material state of each mode.
     return this.motion.modelDecryption ? this.decryption.clarity : this.targetDetail;
   }
+  /** 应用画质参数，按需更新材质、阴影和渲染尺寸。 */
   setQuality(value: RenderQuality | boolean) {
     const quality =
       typeof value === "boolean"
@@ -708,6 +722,7 @@ export class ArchiveScene {
       this.pendingPulse.row -= shift.row;
     }
   }
+  /** 把逻辑档案索引映射到循环阵列单元，并启动选择过渡。 */
   select(index: number, navigation?: ArchiveNavigation) {
     if (!this.navigatingDrag) this.cancelPointer();
     this.setHover(null);
@@ -823,6 +838,7 @@ export class ArchiveScene {
     this.themeUpdates = new InstanceUpdates(this.themeAttribute);
     this.instanceCapacity = capacity;
   }
+  /** 根据当前容器尺寸更新相机与渲染目标；隐藏视口恢复后也需要重新计算。 */
   resize() {
     const w = this.container.clientWidth,
       h = this.container.clientHeight;
@@ -968,6 +984,7 @@ export class ArchiveScene {
     }
     this.archiveMomentum = null;
   }
+  /** 绑定指针选择、拖拽与惯性行为，结合投影坐标判断用户操作。 */
   private bindPointer() {
     const canvas = this.renderer.domElement;
     let activePointer: number | null = null;
@@ -1204,6 +1221,7 @@ export class ArchiveScene {
       pointers.delete(e.pointerId), { signal: this.inputEvents.signal }
     );
   }
+  /** 逐帧更新阵列、选中卡片、解密及渲染；高频路径中避免加入重复资源分配。 */
   update(
     time: number,
     cinematic?: { reveal: number; lift: number; zoom: number; time: number },

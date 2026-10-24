@@ -1,3 +1,8 @@
+/*
+ * 模块导读：根据时间推进文档内容显现，并维护对应 DOM 与材质状态。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import type { DecryptionFrame } from "./decryption.ts";
 
 type Cover = { window: HTMLElement; ink: HTMLElement; order: number };

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：工作台控制器：组合时钟、计时、滚动文字、设置与显隐状态。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { fullMotion, type MotionPreferences } from "./motion-preferences.ts";
 import { rollText, patchRollingPanel } from "./workbench-rolling.ts";
 import { escapeHtml } from "./html.ts";

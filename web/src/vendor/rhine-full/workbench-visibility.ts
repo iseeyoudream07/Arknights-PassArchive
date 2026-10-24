@@ -1,3 +1,8 @@
+/*
+ * 模块导读：工作台元素显隐偏好和宿主属性映射。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 export const workbenchElements = [
   ["clock", "时钟与日期"], ["tasks", "今日事项"], ["module", "右侧功能内容"],
   ["navigation", "底部功能导航"], ["brand", "品牌文字"], ["footer", "页脚信息"],

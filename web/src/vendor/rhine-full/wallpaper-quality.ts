@@ -1,3 +1,8 @@
+/*
+ * 模块导读：把壁纸宿主性能配置转换成场景画质参数。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 import { normalizeQuality, qualityPresets, type RenderQuality } from "./render-quality.ts";
 import type { WallpaperProperties } from "./wallpaper.ts";
 

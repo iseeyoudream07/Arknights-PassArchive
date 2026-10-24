@@ -1,3 +1,8 @@
+/*
+ * 模块导读：动效偏好的定义、预设、规范化与设置表单；系统减少动态效果作为默认依据。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 export type MotionKey =
   | "boot"
   | "selectionWave"
@@ -27,72 +32,72 @@ export const MOTION_LABELS: Record<
 > = {
   boot: {
     title: "BOOT SEQUENCE",
-    description: "开机标志、扫描与欢迎画面",
+    description: "打开应用时播放标志和欢迎动画",
     group: "开场",
   },
   selectionWave: {
     title: "SELECTION WAVE",
-    description: "选档时向阵列传播的波浪",
+    description: "选择系列时，周围模型随之起伏",
     group: "档案阵列",
   },
   idleWave: {
     title: "IDLE MOTION",
-    description: "停止操作后的阵列起伏",
+    description: "未操作时，模型轻轻起伏",
     group: "档案阵列",
   },
   pointerParallax: {
     title: "POINTER PARALLAX",
-    description: "镜头随指针的轻微偏移",
+    description: "画面随鼠标指针轻微移动",
     group: "档案阵列",
   },
   dragMomentum: {
     title: "DRAG MOMENTUM",
-    description: "松手后按实际速度继续滑行",
+    description: "停止拖动后，模型继续滑动并逐渐停下",
     group: "档案阵列",
   },
   selectionTransition: {
     title: "SELECTION TRANSITION",
-    description: "切列、切档时的轨道移动",
+    description: "切换分类或系列时平滑移动",
     group: "档案阵列",
   },
   detailTransition: {
     title: "DETAIL TRANSITION",
-    description: "抽取、转正、归位与详情镜头",
+    description: "打开或关闭系列详情时的模型动画",
     group: "档案详情",
   },
   modelDecryption: {
     title: "MODEL DECRYPTION",
-    description: "模型解密线与磨砂揭示",
+    description: "逐渐显示模型内容的动画",
     group: "档案详情",
   },
   documentReveal: {
     title: "DOCUMENT REVEAL",
-    description: "正文的遮罩揭示",
+    description: "逐渐显示正文的动画",
     group: "档案详情",
   },
   rollingText: {
     title: "ROLLING TEXT",
-    description: "标题、分类与权限标签滚动",
+    description: "切换标题和分类时的文字滚动",
     group: "界面",
   },
   rollingNumbers: {
     title: "ROLLING NUMBERS",
-    description: "序号、列编号与档案编码滚动",
+    description: "切换序号和编号时的数字滚动",
     group: "界面",
   },
   surfaceTransitions: {
     title: "SURFACE TRANSITIONS",
-    description: "详情、检索、收藏与设置窗口过渡",
+    description: "打开详情、搜索、关注和设置时的过渡动画",
     group: "界面",
   },
   viewerNavigation: {
     title: "VIEWER NAVIGATION",
-    description: "360° 旋转、平移、缩放与复位阻尼",
+    description: "旋转、平移、缩放和恢复视角时平滑过渡",
     group: "360° 查看器",
   },
   viewerModelTransition: {
     title: "VIEWER MODEL TRANSITION",
-    description: "拆解、重组与清晰度变化",
+    description: "拆解或重组模型时平滑过渡",
     group: "360° 查看器",
   },
 };
@@ -174,7 +179,7 @@ export function motionEnabled(motion: MotionPreferences, key: MotionKey) {
 export function motionSummary(motion: MotionPreferences) {
   const enabled = Object.values(motion).filter(Boolean).length;
   if (enabled === Object.keys(motion).length) return "当前使用完整动画。";
-  if (enabled === 0) return "当前已减少动画。";
+  if (enabled === 0) return "当前已关闭动画。";
   const highlights: string[] = [];
   if (!motion.boot) highlights.push("开场已跳过");
   if (!motion.selectionWave && !motion.idleWave)
@@ -194,7 +199,7 @@ export function motionSettingsMarkup(
   const selected = preset ?? motionPresetFor(motion);
   const presetButton = (value: "full" | "reduced" | "custom", label: string) =>
     `<button type="button" data-action="motion-preset" data-preset="${value}" aria-pressed="${selected === value}"${value === "custom" ? " disabled" : ""}>${label}</button>`;
-  return `<section id="motion-settings" class="motion-settings" aria-label="动效设置"><div class="motion-settings-head"><div><strong>ANIMATION CONTROLS</strong><span>完整、减少或按分项自定义；关闭后会立即收束当前动画（开场设置下次重播生效）</span></div>${presetButton("full", "完整")}${presetButton("reduced", "减少")}${presetButton("custom", "自定义")}</div><details class="motion-advanced"><summary>精细设置 <span>开场 / 阵列 / 详情 / 界面 / 360° 查看器</span></summary><div class="motion-groups">${groups
+  return `<section id="motion-settings" class="motion-settings" aria-label="动效设置"><div class="motion-settings-head"><div><strong>ANIMATION CONTROLS</strong><span>可选择全部开启、全部关闭，或逐项调整。启动动画的设置在下次播放时生效。</span></div>${presetButton("full", "完整")}${presetButton("reduced", "关闭")}${presetButton("custom", "自定义")}</div><details class="motion-advanced"><summary>自定义动画 <span>开场 / 阵列 / 详情 / 界面 / 360° 查看器</span></summary><div class="motion-groups">${groups
     .map(
       (group) =>
         `<fieldset><legend>${group}</legend>${(

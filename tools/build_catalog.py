@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# 从上游目录和只读上传资料生成统一目录、图片资源、旧版映射及审计报告。
+# 仅在需要重建数据时运行；输入由 --sources 指定，产物由 --suite 指定，日常改界面无需重建。
+
 """Normalize the checked-in catalog and read-only uploads without running JavaScript.
 
 Run from any directory. Only Python's standard library is required. Uploaded
@@ -39,20 +42,24 @@ SERIES_ALIASES = {
 }
 
 
+# 计算输入字节的 SHA-256，用于来源记录、稳定 ID 和目录版本。
 def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+# 根据精确旧名称生成带类型前缀的稳定 ID；改名会改变 ID，影响已有收藏映射。
 def stable_id(prefix: str, identity: str) -> str:
     return prefix + "_" + digest(identity.encode("utf-8"))[:16]
 
 
+# 用稳定键顺序输出 UTF-8 JSON；pretty 控制缩进，不转义中文。
 def serialize(value: object, pretty: bool = True) -> bytes:
     return (json.dumps(value, ensure_ascii=False, sort_keys=True,
                        indent=2 if pretty else None,
                        separators=None if pretty else (",", ":")) + "\n").encode("utf-8")
 
 
+# 先写目标同目录的临时文件，再原子替换，避免读到未写完的单个产物。
 def atomic_write(path: Path, data: bytes) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(dir=path.parent, delete=False) as handle:
@@ -65,6 +72,7 @@ def atomic_write(path: Path, data: bytes) -> None:
         temp.unlink(missing_ok=True)
 
 
+# 仅解析受限的 JavaScript 字面量，避免执行上游 data.js 中的任意代码。
 class LiteralReader:
     """A small literal parser: strings, numbers, booleans, arrays and objects.
 
@@ -76,18 +84,22 @@ class LiteralReader:
     identifier = re.compile(r"[A-Za-z_$][A-Za-z0-9_$]*")
     number = re.compile(r"-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?")
 
+    # 保存源文本和起始游标；后续每次读取都会推进 offset。
     def __init__(self, text: str, offset: int = 0):
         self.text, self.offset = text, offset
 
+    # 跳过空白和注释，使游标停在下一个有效 token 上。
     def skip(self) -> None:
         self.offset = self.ignored.match(self.text, self.offset).end()
 
+    # 要求当前位置出现指定 token；不匹配时带游标位置报错。
     def consume(self, token: str) -> None:
         self.skip()
         if not self.text.startswith(token, self.offset):
             raise ValueError(f"Expected {token!r} at position {self.offset}")
         self.offset += len(token)
 
+    # 递归读取字符串、数组、对象、数值、布尔值或 null，拒绝可执行表达式。
     def value(self) -> object:
         self.skip()
         char = self.text[self.offset:self.offset + 1]
@@ -142,6 +154,7 @@ class LiteralReader:
         raise ValueError(f"Unsupported non-literal JavaScript at {self.offset}")
 
 
+# 读取指定 window 数据赋值，并核对精一/精二拆分表达式仍符合已审查规则。
 def parse_source(text: str) -> dict:
     data = {}
     for name in ("LOW_STAR", "PASS_DATA", "OPERATOR_INFO", "FACTION_LOGO", "OPERATOR_ALIAS"):
@@ -170,7 +183,9 @@ def parse_source(text: str) -> dict:
     return data
 
 
+# 以只读方式检查 ZIP 的成员路径、大小、重复项及 CRC，再提供受限读取。
 class SafeArchive:
+    # 校验压缩包，不直接解压；拒绝路径穿越、符号链接、加密项和超限文件。
     def __init__(self, path: Path):
         self.path = path
         self.hash = digest(path.read_bytes())
@@ -197,6 +212,7 @@ class SafeArchive:
         if bad:
             raise ValueError(f"ZIP checksum failed: {bad}")
 
+    # 选择指定文件名最浅层且唯一的成员，避免早期 resource/ 副本替代主表。
     def find(self, filename: str) -> str:
         candidates = sorted(name for name in self.names if name.endswith("/" + filename))
         # The archive also contains early resource/ copies. The root member is
@@ -208,10 +224,12 @@ class SafeArchive:
             raise ValueError(f"Expected one archive file {filename}: {candidates}")
         return candidates[0]
 
+    # 读取成员并按兼容 BOM 的 UTF-8 解码 JSON，不修改原 ZIP。
     def json(self, member: str) -> object:
         return json.loads(self.zip.read(member).decode("utf-8-sig"))
 
 
+# 将年/月/日或年-月-日规范成 ISO 日期；空字符串返回 None，非法日期报错。
 def normalize_date(value: object) -> str | None:
     if not isinstance(value, str) or not value.strip():
         return None
@@ -221,6 +239,7 @@ def normalize_date(value: object) -> str | None:
     return dt.date(*(int(item) for item in match.groups())).isoformat()
 
 
+# 用编号或明确别名寻找补充盒号，返回（候选键，匹配依据），不做模糊猜测。
 def supplementary_key(entry: dict) -> tuple[str | None, str]:
     name, kind = entry["series"], entry["type"]
     if kind == "main":
@@ -234,6 +253,8 @@ def supplementary_key(entry: dict) -> tuple[str | None, str]:
     return None, "no_safe_identity_match"
 
 
+# 解析来源 → 校验压缩包 → 合并元数据 → 生成系列/通行证 → 输出目录和审计。
+# 调试数据差异可在 supplement 匹配、variants 拆分和 version 计算处设断点。
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", type=Path, default=SUITE)
@@ -291,6 +312,7 @@ def main() -> None:
     legacy_series, legacy_passes = {}, {}
     operator_entries = {}
 
+    # 只复制已引用且签名有效的图片，缓存 URL，并在审计中记录来源和摘要。
     def asset(member: str) -> str | None:
         if member not in images.names:
             if member not in audit["missing_assets"]:
@@ -317,6 +339,7 @@ def main() -> None:
         if name in legacy_series:
             raise ValueError(f"Duplicate legacy series: {name}")
         legacy_series[name] = series_id
+        # 补充来源只提供可确定匹配的盒号、日期和条码；系列及干员列表仍以主体来源为准。
         key, strategy = supplementary_key(entry)
         supplement = box_index.get(key)
         match = None
@@ -351,6 +374,7 @@ def main() -> None:
             barcode_values = supplement.get("barcodes", [])
             if not isinstance(barcode_values, list):
                 raise ValueError(f"barcodes is not a list: {key}")
+            # 兼容旧单值 barcode 与新数组 barcodes，并集去重，避免空数组遮住旧条码。
             for barcode in [*barcode_values, supplement.get("barcode")]:
                 if barcode in (None, ""):
                     continue
@@ -375,6 +399,7 @@ def main() -> None:
                     "class": info.get("class", ""), "rarity": rarity, "faction": info.get("faction", ""),
                     "nation": info.get("nation", ""), "en": info.get("en", ""), "py": info.get("py", ""), "pyi": info.get("pyi", ""),
                     "avatar": asset(f"images/avatar/{operator_name}-精一.png")}
+            # 需要拆分的系列中，高星生成精一/精二两条 ID；低星及待校对项按既有规则保留。
             variants = ["精一", "精二"] if name in source["SPLIT_ELITE_SERIES"] and operator_name not in low_star else ["精一"] if name in source["SPLIT_ELITE_SERIES"] else [None]
             if operator_name == "待校对":
                 variants = [None]
@@ -414,6 +439,7 @@ def main() -> None:
         "supplement_readme_sha256": digest(uploaded.zip.read(readme_member)),
         "supplement_license_excerpt": "除非另有声明，本仓库其他内容采用知识共享 署名-非商业性使用 4.0 国际（CC BY-NC 4.0）许可协议进行许可。",
         "image_license": "User upload contains no license file; upstream disclaimer excludes game images from MIT"}
+    # 目录版本由内容摘要生成，不含 generated_at，保证相同内容得到相同版本。
     version_content = {"source_commit": args.source_commit, "sources": sources, "series": series_records, "operators": operators}
     version = "catalog-" + digest(serialize(version_content, pretty=False))[:16]
     catalog = {"version": version, "generated_at": generated_at, "source_commit": args.source_commit,

@@ -1,3 +1,8 @@
+/*
+ * 模块导读：三维终端基础样式，覆盖档案、HUD、面板和控件；业务层补充样式位于外层目录。
+ * 此目录基于 RhineLabUI；原版权与来源见 NOTICE.md，具体调用关系见 docs/code-guide-zh.md。
+ */
+
 @import "./fonts.css";
 * {
   box-sizing: border-box;

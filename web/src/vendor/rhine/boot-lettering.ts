@@ -1,3 +1,8 @@
+/* 独立开屏的字体加载与固定台词图形。
+ * 此目录为独立开屏参考子集；整站三维终端使用 vendor/rhine-full。
+ * 保留原有版权和来源声明；项目阅读路线见 docs/code-guide-zh.md。
+ */
+
 import artwork from "./boot-lettering-art.json";
 import "./boot-lettering.css";
 import { assetUrl } from "./asset-url.ts";

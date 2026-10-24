@@ -1,3 +1,4 @@
+<!-- 本机检查：Django 系统检查与测试，随后 Web 构建和现有前端测试。 -->
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="05 本地检查" type="PythonConfigurationType" factoryName="Python">
     <module name="Arknights-PassArchive" />

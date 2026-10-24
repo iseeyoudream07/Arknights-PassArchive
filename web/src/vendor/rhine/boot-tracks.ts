@@ -1,3 +1,8 @@
+/* 独立开屏的参考空间轨迹与连续插值。
+ * 此目录为独立开屏参考子集；整站三维终端使用 vendor/rhine-full。
+ * 保留原有版权和来源声明；项目阅读路线见 docs/code-guide-zh.md。
+ */
+
 // Reference-space measurements (1920×1080, 25 fps). See reference/measure-boot.py.
 // Monotone cubic interpolation preserves measured speeds between source frames;
 // unlike easing each interval separately, it does not stop at every keyframe.
